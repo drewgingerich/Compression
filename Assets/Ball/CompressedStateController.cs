@@ -7,7 +7,7 @@ public class CompressedStateController : BallStateController {
 	BallBehavior ballBehavior;
 	Vector2 compressionVector;
 	float compressionVectorChangeSpeed = 6;
-	float maxStickyTime = 1f;
+	float maxStickyTime = 0.4f;
 
 	public CompressedStateController (BallBehavior ballBehavior) {
 		this.ballBehavior = ballBehavior;

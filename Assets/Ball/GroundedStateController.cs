@@ -5,7 +5,7 @@ using UnityEngine;
 public class GroundedStateController : BallStateController {
 
 	BallBehavior ballBehavior;
-	float maxStickyTime = 0.5f;
+	float maxStickyTime = 0.3f;
 
 	public GroundedStateController (BallBehavior ballBehavior) {
 		this.ballBehavior = ballBehavior;
