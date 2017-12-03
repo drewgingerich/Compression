@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class AimBarBehavior : MonoBehaviour {
 
-	SpriteRenderer spriteRenderer;
+	[SerializeField] GameObject lineObject;
 
 	void Start () {
-		spriteRenderer = gameObject.GetComponent<SpriteRenderer> ();
-		gameObject.SetActive (false);
+		HideBar ();
 	}
 
 	public void ShowBar () {
@@ -24,5 +23,11 @@ public class AimBarBehavior : MonoBehaviour {
 		if (Vector2.Dot (compressionVector, Vector2.up) < 0)
 			compressionRotation *= -1;
 		transform.rotation = Quaternion.Euler (0, 0, compressionRotation + 180);
+
+		float scale = Mathf.Sqrt (Vector2.Dot (compressionVector, contactNormal) * -1);
+		lineObject.transform.localScale = new Vector3 (20, scale * 4, 1);
+		Color tempColor = lineObject.GetComponent<SpriteRenderer> ().color;
+		tempColor.a = scale;
+		lineObject.GetComponent<SpriteRenderer> ().color = tempColor;
 	}
 }

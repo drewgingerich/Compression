@@ -5,6 +5,8 @@ using UnityEngine;
 public class BallBehavior : MonoBehaviour {
 
 	public AimBarBehavior aimBar;
+	public BallSpriteBehavior ballSprite;
+	public Animator animator;
 	Rigidbody2D rigidbody;
 
 	List<Collision2D> collisions { get; set; }
@@ -26,13 +28,11 @@ public class BallBehavior : MonoBehaviour {
 	public void EnableSticky () {
 		sticky = true;
 		rigidbody.gravityScale = 0;
-		rigidbody.sharedMaterial.friction = 2;
 	}
 
 	public void DisableSticky () {
 		sticky = false;
 		rigidbody.gravityScale = gravity;
-		rigidbody.sharedMaterial.friction = 1;
 		stickyTime = 0f;
 	}
 
