@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour {
 
+	public AimBarBehavior aimBar;
+	Rigidbody2D rigidbody;
+
 	List<Collision2D> collisions { get; set; }
 	BallStateController controller;
 
+	public float gravity = 0.3f;
 	public float speed = 0.5f;
 	public bool grounded = false;
-	public bool compressed = true;
 	public bool sticky = false;
 	public float stickyTime = 0f;
 
@@ -21,11 +24,16 @@ public class BallBehavior : MonoBehaviour {
 	}
 
 	public void EnableSticky () {
-
+		sticky = true;
+		rigidbody.gravityScale = 0;
+		rigidbody.sharedMaterial.friction = 2;
 	}
 
 	public void DisableSticky () {
-
+		sticky = false;
+		rigidbody.gravityScale = gravity;
+		rigidbody.sharedMaterial.friction = 1;
+		stickyTime = 0f;
 	}
 
 	void Update () {
@@ -39,6 +47,7 @@ public class BallBehavior : MonoBehaviour {
 	}
 
 	void Awake () {
+		rigidbody = gameObject.GetComponent<Rigidbody2D> ();
 		collisions = new List<Collision2D> ();
 		controller = (BallStateController) new AirbornStateController (this);
 	}
@@ -55,6 +64,7 @@ public class BallBehavior : MonoBehaviour {
 			break;
 		}
 		if (collisions.Count == 0)
+			DisableSticky ();
 			grounded = false;
 	}
 }
