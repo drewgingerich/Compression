@@ -11,7 +11,7 @@ public class AirbornStateController : BallStateController {
 	}
 
 	public override BallStateController CheckTransitions() {
-		if (ballBehavior.grounded)
+		if (ballBehavior.collisions.Count > 0)
 			return new GroundedStateController (ballBehavior);
 		return null;
 	}

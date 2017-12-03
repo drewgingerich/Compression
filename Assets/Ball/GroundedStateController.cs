@@ -16,7 +16,7 @@ public class GroundedStateController : BallStateController {
 	}
 
 	public override BallStateController CheckTransitions() {
-		if (!ballBehavior.grounded) {
+		if (ballBehavior.collisions.Count == 0) {
 			ballBehavior.DisableSticky ();
 			return new AirbornStateController (ballBehavior);
 		}

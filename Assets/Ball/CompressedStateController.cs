@@ -6,8 +6,8 @@ public class CompressedStateController : BallStateController {
 
 	BallBehavior ballBehavior;
 	Vector2 compressionVector;
-	float compressionVectorChangeSpeed = 6;
-	float maxStickyTime = 0.4f;
+	float compressionVectorChangeSpeed = 4f;
+	float maxStickyTime = 0.5f;
 
 	public CompressedStateController (BallBehavior ballBehavior) {
 		this.ballBehavior = ballBehavior;
@@ -49,7 +49,7 @@ public class CompressedStateController : BallStateController {
 		ballBehavior.aimBar.UpdateAimBar (compressionVector, ballBehavior.GetSumContactNormal ());
 		ballBehavior.ballSprite.RotateToNormal (ballBehavior.GetSumContactNormal ());
 		if (ballBehavior.sticky) {
-			ballBehavior.stickyTime += Time.deltaTime / 2;
+			ballBehavior.stickyTime += Time.deltaTime;
 			if (ballBehavior.stickyTime >= maxStickyTime)
 				ballBehavior.DisableSticky ();
 		}
@@ -57,8 +57,9 @@ public class CompressedStateController : BallStateController {
 
 	void LaunchBall () {
 		Vector2 sumNormal = ballBehavior.GetSumContactNormal ();
-		float scaling = Mathf.Sqrt (Mathf.Abs (Vector2.Dot (sumNormal, compressionVector)));
-		Vector2 releaseForce = compressionVector * - 200 * scaling;
+		float compressionScaling = Mathf.Sqrt (Mathf.Abs (Vector2.Dot (sumNormal, compressionVector)));
+		float stickyScaling = ballBehavior.sticky ? 300 : 200;
+		Vector2 releaseForce = compressionVector * - stickyScaling * compressionScaling;
 		ballBehavior.gameObject.GetComponent<Rigidbody2D> ().AddForce (releaseForce);
 	}
 }
