@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour {
 
+	public event System.Action OnDie;
+
+	public ControlScheme controlScheme;
 	public AimBarBehavior aimBar;
 	public BallSpriteBehavior ballSprite;
 	public Animator animator;
@@ -37,6 +40,8 @@ public class BallBehavior : MonoBehaviour {
 	}
 
 	public void Die () {
+		if (OnDie != null)
+			OnDie ();
 		Destroy (gameObject);
 	}
 
