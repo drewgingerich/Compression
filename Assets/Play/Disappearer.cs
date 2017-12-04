@@ -5,13 +5,10 @@ using UnityEngine.UI;
 
 public class Disappearer : MonoBehaviour {
 
-	SpriteRenderer sprite;
 	[SerializeField] float disappearTime = 2f;
 	float time = 0;
 
-	// Use this for initialization
 	void  Start () {
-		sprite = gameObject.GetComponent<SpriteRenderer> ();
 		StartCoroutine (Disappear ());
 	}
 

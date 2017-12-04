@@ -7,7 +7,7 @@ public class MenuManager : MonoBehaviour {
 	public event System.Action OnStart;
 
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Return) || Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetButtonDown ("Submit")) {
 			if (OnStart != null)
 				OnStart ();
 		}
