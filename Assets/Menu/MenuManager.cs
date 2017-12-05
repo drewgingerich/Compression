@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour {
 		if (Input.GetButtonDown ("Submit")) {
 			if (OnStart != null)
 				OnStart ();
+		} else if (Input.GetButtonDown ("Cancel")) {
+			Application.Quit ();
 		}
 	}
 }
