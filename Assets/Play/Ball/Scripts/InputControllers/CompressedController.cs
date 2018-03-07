@@ -42,7 +42,7 @@ public class CompressedController : BallController {
 		// ball.aimBar.ShowBar ();
 		// if (!ball.sticky)
 		// 	ball.EnableSticky ();
-		// ball.animator.SetTrigger ("squish");
+		ball.animator.SetBool ("Squished", true);
 	}
 
 	public override void Exit() {
@@ -51,7 +51,7 @@ public class CompressedController : BallController {
 		// ball.aimBar.HideBar ();
 		// if (ball.sticky)
 		// 	ball.DisableSticky ();
-		// ball.animator.SetTrigger ("launch");
+		ball.animator.SetBool ("Squished", false);
 	}
 
 	void LaunchBall(Vector2 releaseVector, Vector2 sumNormal) {

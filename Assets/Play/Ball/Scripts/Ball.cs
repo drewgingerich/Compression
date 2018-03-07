@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour {
 
 	public ControlScheme controlScheme;
 	public BallCollision collisionManager;
+	public Animator animator;
 	public BallState state;
 
 	BallController controller;
