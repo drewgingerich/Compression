@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BallStateController {
+public abstract class BallController {
 
-	public abstract BallStateController CheckTransitions ();
+	public abstract BallController CheckTransitions ();
 	public abstract void Update ();
 	public virtual void Enter () {}
 	public virtual void Exit () {}
