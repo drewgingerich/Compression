@@ -10,19 +10,16 @@ public class Ball : MonoBehaviour {
 	// public BallSpriteBehavior ballSprite;
 	// public Animator animator;
 
-	public ControlScheme controlScheme;
-	public BallCollision collisionManager;
+	public InputScheme inputScheme;
+	public BallCollisionManager collisionManager;
 	public Animator animator;
 	public BallState state;
+	public AimBarBehavior aimBar;
 
 	BallController controller;
 
-	// public void LoadControlScheme (ControlScheme controlScheme) {
-	// 	this.controlScheme = controlScheme;
-	// }
-
 	void Awake() {
-		controlScheme = new ControlScheme("Horizontal", "Vertical"); 
+		inputScheme = new KeyboardInputScheme("Horizontal", "Vertical"); 
 		controller = new AirbornController(this);
 	}
 
@@ -33,7 +30,6 @@ public class Ball : MonoBehaviour {
 	// }
 
 	void Update () {
-		controlScheme.UpdateInput();
 		bool checkForTransition = true;
 		while (checkForTransition) {
 			checkForTransition = CheckForNewState();

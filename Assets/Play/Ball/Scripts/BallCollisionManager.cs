@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallCollision : MonoBehaviour {
+public class BallCollisionManager : MonoBehaviour {
 
 	Ball ball;
 	List<Collision2D> collisions { get; set; }

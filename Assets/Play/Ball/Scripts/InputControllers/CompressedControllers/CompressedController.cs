@@ -1,23 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CompressedControllerInput;
 
 public class CompressedController : BallController {
 
+	float timeCompressed = 0;
+	IInputHandler inputHandler;
 	Ball ball;
+	BallCollisionManager collisionManager;
+	BallState ballState;
 	Vector2 releaseVector;
 	// float maxStickyTime = 0.5f;
 
 	public CompressedController(Ball ball) {
 		this.ball = ball;
+		inputHandler = InputHandlerFactory.GetInputHandler(ball.inputScheme);
+		collisionManager = ball.collisionManager;
+		ballState  = ball.state;
 	}
 
 	public override BallController CheckTransitions() {
-		if (!ball.state.grounded) {
+		if (!ballState.grounded) {
 			return new AirbornController(ball);
 		}
-		Vector2 inputDirection = ball.controlScheme.direction;
-		Vector2 sumNormal = ball.collisionManager.GetSumContactNormal();
+		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
+		Vector2 sumNormal = collisionManager.GetSumContactNormal();
 		if (Vector2.Dot(inputDirection, sumNormal) >= 0) {;
 			return new AirbornController(ball);
 		}
@@ -25,12 +33,16 @@ public class CompressedController : BallController {
 	}
 
 	public override void Update() {
-		Vector2 inputDirection = ball.controlScheme.direction;
-		if (inputDirection.magnitude > releaseVector.magnitude)
-			releaseVector = inputDirection;
-		// float inputMagnitude = ball.controlScheme.magnitude;
+		timeCompressed += Time.deltaTime;
+		Vector2 collisionNormal = collisionManager.GetSumContactNormal();
+		Vector2 inputVector = inputHandler.GetInputVector(collisionNormal, timeCompressed);
+		float magnitude = Mathf.Sqrt(Mathf.Abs(Vector2.Dot(inputVector, collisionNormal)));
+		releaseVector = -inputVector * magnitude;
+		Debug.Log(Vector2.Dot (inputVector, collisionNormal));
+		// Debug.Log(releaseVector);
+		// float angle = Vector2.Angle(normal, inputVector);
+		// if (angle > 
 		// ball.aimBar.UpdateAimBar (compressionVector, ball.GetSumContactNormal ());
-		// ball.ballSprite.RotateToNormal (ball.GetSumContactNormal ());
 		// if (ball.sticky) {
 		// 	ball.stickyTime += Time.deltaTime;
 		// 	if (ball.stickyTime >= maxStickyTime)
@@ -39,26 +51,25 @@ public class CompressedController : BallController {
 	}
 
 	public override void Enter() {
-		// ball.aimBar.ShowBar ();
+		// ball.aimBar.Show();
 		// if (!ball.sticky)
 		// 	ball.EnableSticky ();
 		ball.animator.SetBool ("Squished", true);
 	}
 
 	public override void Exit() {
-		Vector2 sumNormal = ball.collisionManager.GetSumContactNormal();
-		LaunchBall(releaseVector, sumNormal);
-		// ball.aimBar.HideBar ();
+		LaunchBall();
+		// ball.aimBar.Hide();
 		// if (ball.sticky)
 		// 	ball.DisableSticky ();
 		ball.animator.SetBool ("Squished", false);
 	}
 
-	void LaunchBall(Vector2 releaseVector, Vector2 sumNormal) {
-		float compressionScaling = Mathf.Sqrt(Mathf.Abs(Vector2.Dot(sumNormal, releaseVector)));
+	void LaunchBall() {
 		// float stickyScaling = ball.sticky ? 250 : 150;
-		float stickyScaling = 250;
-		Vector2 releaseForce = releaseVector * -stickyScaling * compressionScaling;
+		float stickyScaling = 350;
+		Vector2 releaseForce = releaseVector * stickyScaling;
+		Debug.Log(releaseForce);
 		ball.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
 	}
 }

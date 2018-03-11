@@ -15,7 +15,7 @@ public class GroundedController : BallController {
 		if (!ball.state.grounded) {
 			return new AirbornController (ball);
 		}
-		Vector2 inputDirection = ball.controlScheme.direction;
+		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
 		Vector2 sumNormal = ball.collisionManager.GetSumContactNormal ();
 		if (Vector2.Dot (inputDirection, sumNormal) < 0) {
 			return new CompressedController (ball);

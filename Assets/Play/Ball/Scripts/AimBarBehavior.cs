@@ -7,14 +7,14 @@ public class AimBarBehavior : MonoBehaviour {
 	[SerializeField] GameObject lineObject;
 
 	void Start () {
-		HideBar ();
+		Hide ();
 	}
 
-	public void ShowBar () {
+	public void Show () {
 		gameObject.SetActive (true);
 	}
 
-	public void HideBar () {
+	public void Hide () {
 		gameObject.SetActive (false);
 	}
 

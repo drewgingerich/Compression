@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AlignWithCollisionNormal : MonoBehaviour {
 
-	[SerializeField] BallCollision collisionManager;
+	[SerializeField] BallCollisionManager collisionManager;
 
 	void Update() {
 		Vector2 normal = collisionManager.GetSumContactNormal();
