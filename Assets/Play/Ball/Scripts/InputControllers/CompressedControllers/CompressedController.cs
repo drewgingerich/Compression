@@ -38,11 +38,7 @@ public class CompressedController : BallController {
 		Vector2 inputVector = inputHandler.GetInputVector(collisionNormal, timeCompressed);
 		float magnitude = Mathf.Sqrt(Mathf.Abs(Vector2.Dot(inputVector, collisionNormal)));
 		releaseVector = -inputVector * magnitude;
-		Debug.Log(Vector2.Dot (inputVector, collisionNormal));
-		// Debug.Log(releaseVector);
-		// float angle = Vector2.Angle(normal, inputVector);
-		// if (angle > 
-		// ball.aimBar.UpdateAimBar (compressionVector, ball.GetSumContactNormal ());
+		ball.aimBar.UpdatePosition(-releaseVector);
 		// if (ball.sticky) {
 		// 	ball.stickyTime += Time.deltaTime;
 		// 	if (ball.stickyTime >= maxStickyTime)
@@ -51,7 +47,7 @@ public class CompressedController : BallController {
 	}
 
 	public override void Enter() {
-		// ball.aimBar.Show();
+		ball.aimBar.Show();
 		// if (!ball.sticky)
 		// 	ball.EnableSticky ();
 		ball.animator.SetBool ("Squished", true);
@@ -59,7 +55,7 @@ public class CompressedController : BallController {
 
 	public override void Exit() {
 		LaunchBall();
-		// ball.aimBar.Hide();
+		ball.aimBar.Hide();
 		// if (ball.sticky)
 		// 	ball.DisableSticky ();
 		ball.animator.SetBool ("Squished", false);
@@ -69,7 +65,6 @@ public class CompressedController : BallController {
 		// float stickyScaling = ball.sticky ? 250 : 150;
 		float stickyScaling = 350;
 		Vector2 releaseForce = releaseVector * stickyScaling;
-		Debug.Log(releaseForce);
 		ball.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
 	}
 }

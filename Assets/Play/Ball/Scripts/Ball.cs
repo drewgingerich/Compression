@@ -14,7 +14,7 @@ public class Ball : MonoBehaviour {
 	public BallCollisionManager collisionManager;
 	public Animator animator;
 	public BallState state;
-	public AimBarBehavior aimBar;
+	public AimBarUI aimBar;
 
 	BallController controller;
 
