@@ -5,6 +5,7 @@ using UnityEngine;
 namespace CompressedControllerInput {
 	public class KeyboardInputHandler : IInputHandler {
 
+		float maxAngle = 20f;
 		float maxAngularVelocity = 50f;
 		float timeCompressed;
 		InputScheme inputScheme;
@@ -15,33 +16,38 @@ namespace CompressedControllerInput {
 			previousInputDirection = Vector2.zero;
 		}
 
-		public Vector2 GetInputVector(Vector2 collisionNormal, float timeCompressed) {
+		public Vector2 GetInputVector(Vector2 reflectionDirection, float timeCompressed) {
 			Vector2 inputDirection = inputScheme.GetInputDirection();
-			Vector2 adjustedDirection = AdjustDirection(inputDirection, previousInputDirection);
-			previousInputDirection = adjustedDirection;
-
-			// float angularChange = Vector2.Angle(lastInputVector, inputDirection);
-			// float angleToMove = Mathf.Min(angularChange, maxAngularMovement);
-			// Vector2 orthogonal = Quaternion.AngleAxis(90f, Vector3.forward) * lastInputVector;
-			// if (Vector2.Dot(orthogonal, inputDirection) < 0)
-			// 	angleToMove *= -1;
-			// lastInputVector = Quaternion.AngleAxis(angleToMove, Vector3.forward) * inputDirection;
-			// Debug.Log(inputDirection);
-			// return lastInputVector;
-			return adjustedDirection;
+			Vector2 clampedDirection = ClampDirection(inputDirection, -reflectionDirection, maxAngle);
+			Debug.Log(clampedDirection);
+			Vector2 smoothedDirection = SmoothDirectionChange(clampedDirection, previousInputDirection, maxAngularVelocity);
+			previousInputDirection = smoothedDirection;
+			return smoothedDirection;
 		}
 
-		Vector2 AdjustDirection(Vector2 inputDirection, Vector2 previousInputDirection) {
-			if (previousInputDirection == Vector2.zero)
-				return inputDirection;
-			float angularMovement = Vector2.SignedAngle(previousInputDirection, inputDirection);
+		Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
+			float angle = Vector2.SignedAngle(referenceDirection, direction);
+			if (Mathf.Abs(angle) <= maxAngle)
+				return direction;
+			float clampedAngle = angle >= 0 ? maxAngle : -maxAngle;
+			Quaternion rotation = Quaternion.AngleAxis(clampedAngle, Vector3.forward);
+			return rotation * referenceDirection;
+	}
+		
+		Vector2 SmoothDirectionChange(Vector2 direction, Vector2 referenceDirection, float maxAngularVelocity) {
+			if (referenceDirection == Vector2.zero)
+				return direction;
+			float angularMovement = Vector2.SignedAngle(referenceDirection, direction);
 			float maxAngularMovement = maxAngularVelocity * Time.deltaTime;
-			Debug.Log(maxAngularMovement);
 			if (Mathf.Abs(angularMovement) <= maxAngularMovement)
-				return inputDirection;
-			float clampedMovement = angularMovement >=0 ? maxAngularMovement : -maxAngularMovement;
-			Quaternion rotation = Quaternion.AngleAxis(clampedMovement, Vector3.forward);
-			return rotation * previousInputDirection;
+				return direction;
+			float smoothedMovement = angularMovement >=0 ? maxAngularMovement : -maxAngularMovement;
+			Quaternion rotation = Quaternion.AngleAxis(smoothedMovement, Vector3.forward);
+			return rotation * referenceDirection;
+		}
+
+		float FindMagnitude() {
+			return 1f;
 		}
 	}
 }
