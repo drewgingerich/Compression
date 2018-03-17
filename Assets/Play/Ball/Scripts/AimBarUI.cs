@@ -18,11 +18,11 @@ public class AimBarUI : MonoBehaviour {
 	}
 
 	public void Show() {
-		gameObject.SetActive(true);
+		lineRenderer.enabled = true;
 	}
 
 	public void Hide() {
-		gameObject.SetActive(false);
+		lineRenderer.enabled = false;
 	}
 
 	public void UpdatePosition(Vector2 compressionVector) {

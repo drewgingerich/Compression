@@ -5,8 +5,8 @@ using UnityEngine;
 namespace CompressedControllerInput {
 	public class KeyboardInputHandler : IInputHandler {
 
-		float maxAngle = 20f;
-		float maxAngularVelocity = 50f;
+		float maxAngle = 50f;
+		float maxAngularVelocity = 100f;
 		float timeCompressed;
 		InputScheme inputScheme;
 		Vector2 previousInputDirection;
@@ -19,7 +19,6 @@ namespace CompressedControllerInput {
 		public Vector2 GetInputVector(Vector2 reflectionDirection, float timeCompressed) {
 			Vector2 inputDirection = inputScheme.GetInputDirection();
 			Vector2 clampedDirection = ClampDirection(inputDirection, -reflectionDirection, maxAngle);
-			Debug.Log(clampedDirection);
 			Vector2 smoothedDirection = SmoothDirectionChange(clampedDirection, previousInputDirection, maxAngularVelocity);
 			previousInputDirection = smoothedDirection;
 			return smoothedDirection;

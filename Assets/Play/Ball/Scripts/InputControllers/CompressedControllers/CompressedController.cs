@@ -26,9 +26,11 @@ public class CompressedController : BallController {
 		}
 		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
 		Vector2 sumNormal = collisionManager.GetSumContactNormal();
-		if (Vector2.Dot(inputDirection, sumNormal) >= 0) {;
+		// if (Vector2.Dot(inputDirection, sumNormal) >= 0) {;
+		// 	return new AirbornController(ball);
+		// }
+		if (inputDirection == Vector2.zero)
 			return new AirbornController(ball);
-		}
 		return null;
 	}
 
