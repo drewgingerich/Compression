@@ -23,8 +23,12 @@ public class GroundedController : BallController {
 		return null;
 	}
 
+	public override void Enter() {
+		ball.state.timeGrounded = 0f;
+	}
+
 	public override void Update () {
-		return;
+		ball.state.timeGrounded += Time.deltaTime;
 		// Vector2 inputDirection = ball.controlScheme.direction;
 		// ball.gameObject.GetComponent<Rigidbody2D> ().AddForce (inputDirection);
 		// if (ball.sticky) {

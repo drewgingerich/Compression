@@ -16,7 +16,7 @@ namespace CompressedControllerInput {
 			previousInputDirection = Vector2.zero;
 		}
 
-		public Vector2 GetInputVector(Vector2 reflectionDirection, float timeCompressed) {
+		public Vector2 GetInputVector(Vector2 reflectionDirection) {
 			Vector2 inputDirection = inputScheme.GetInputDirection();
 			Vector2 clampedDirection = ClampDirection(inputDirection, -reflectionDirection, maxAngle);
 			Vector2 smoothedDirection = SmoothDirectionChange(clampedDirection, previousInputDirection, maxAngularVelocity);

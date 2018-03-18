@@ -16,7 +16,7 @@ public class Ball : MonoBehaviour {
 	public BallState state;
 	public AimBarUI aimBar;
 
-	BallController controller;
+	[SerializeField] BallController controller;
 
 	void Awake() {
 		inputScheme = new KeyboardInputScheme("Horizontal", "Vertical"); 

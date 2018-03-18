@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class BallCollisionManager : MonoBehaviour {
 
-	Ball ball;
+	[SerializeField] Ball ball;
 	List<Collision2D> collisions { get; set; }
+	Vector2 impactVector;
+
+	public Vector2 GetReflectionVector() {
+		return Vector2.Reflect(-impactVector.normalized, GetSumContactNormal());
+	}
 
 	public Vector2 GetSumContactNormal() {
 		Vector2 sumNormal = Vector2.zero;
@@ -16,11 +21,12 @@ public class BallCollisionManager : MonoBehaviour {
 
 	void Awake() {
 		collisions = new List<Collision2D>();
-		ball = GetComponent<Ball>();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
 		collisions.Add(collision2D);
+		if (!ball.state.grounded)
+			impactVector = collision2D.relativeVelocity;
 		ball.state.grounded = true;
 	}
 

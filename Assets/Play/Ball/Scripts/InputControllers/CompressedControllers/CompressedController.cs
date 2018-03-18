@@ -6,6 +6,7 @@ using CompressedControllerInput;
 public class CompressedController : BallController {
 
 	float timeCompressed = 0;
+	float reflectionDieOff = 1;
 	IInputHandler inputHandler;
 	Ball ball;
 	BallCollisionManager collisionManager;
@@ -21,11 +22,10 @@ public class CompressedController : BallController {
 	}
 
 	public override BallController CheckTransitions() {
-		if (!ballState.grounded) {
+		if (!ballState.grounded)
 			return new AirbornController(ball);
-		}
 		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
-		Vector2 sumNormal = collisionManager.GetSumContactNormal();
+		Vector2 sumNormal = collisionManager.GetReflectionVector();
 		// if (Vector2.Dot(inputDirection, sumNormal) >= 0) {;
 		// 	return new AirbornController(ball);
 		// }
@@ -36,9 +36,19 @@ public class CompressedController : BallController {
 
 	public override void Update() {
 		timeCompressed += Time.deltaTime;
+		ball.state.timeGrounded += Time.deltaTime;
 		Vector2 collisionNormal = collisionManager.GetSumContactNormal();
-		Vector2 inputVector = inputHandler.GetInputVector(collisionNormal, timeCompressed);
-		float magnitude = Mathf.Sqrt(Mathf.Abs(Vector2.Dot(inputVector, collisionNormal)));
+		Vector2 reflectionVector = collisionManager.GetReflectionVector();
+		Vector2 referenceVector;
+		if (timeCompressed >= reflectionDieOff) {
+			referenceVector = collisionNormal;
+		} else {
+			float scaleOne = ball.state.timeGrounded / reflectionDieOff;
+			float scaleTwo = 1 - scaleOne;
+			referenceVector = scaleOne * collisionNormal + scaleTwo * reflectionVector;
+		}
+		Vector2 inputVector = inputHandler.GetInputVector(referenceVector.normalized);
+		float magnitude = Mathf.Sqrt(Mathf.Abs(Vector2.Dot(inputVector, referenceVector)));
 		releaseVector = -inputVector * magnitude;
 		ball.aimBar.UpdatePosition(-releaseVector);
 		// if (ball.sticky) {
@@ -67,6 +77,6 @@ public class CompressedController : BallController {
 		// float stickyScaling = ball.sticky ? 250 : 150;
 		float stickyScaling = 350;
 		Vector2 releaseForce = releaseVector * stickyScaling;
-		ball.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
+		ball.collisionManager.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
 	}
 }
