@@ -12,15 +12,15 @@ public class Ball : MonoBehaviour {
 
 	public InputScheme inputScheme;
 	public BallCollisionManager collisionManager;
+	public StickyStateManager stickyManager;
 	public Animator animator;
-	public BallState state;
 	public AimBarUI aimBar;
 
 	[SerializeField] BallController controller;
 
 	void Awake() {
 		inputScheme = new KeyboardInputScheme("Horizontal", "Vertical"); 
-		controller = new AirbornController(this);
+		controller = new AirbornController();
 	}
 
 	// public void Die () {
@@ -29,20 +29,20 @@ public class Ball : MonoBehaviour {
 	// 	Destroy (gameObject);
 	// }
 
-	void Update () {
+	void FixedUpdate () {
 		bool checkForTransition = true;
 		while (checkForTransition) {
 			checkForTransition = CheckForNewState();
 		}
-		controller.Update ();
+		controller.Update (this);
 	}
 
 	bool CheckForNewState() {
-		BallController newController = controller.CheckTransitions();
+		BallController newController = controller.CheckTransitions(this);
 		if (newController != null) {
-			controller.Exit();
+			controller.Exit(this);
 			controller = newController;
-			controller.Enter();
+			controller.Enter(this);
 			return true;
 		} else {
 			return false;

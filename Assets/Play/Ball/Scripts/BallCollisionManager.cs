@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class BallCollisionManager : MonoBehaviour {
 
-	[SerializeField] Ball ball;
-	List<Collision2D> collisions { get; set; }
-	Vector2 impactVector;
+	public bool ballIsGrounded;
+	public float timeGrounded;
+	public Vector2 impactVector { get; private set; }
 
-	public Vector2 GetReflectionVector() {
+	List<Collision2D> collisions { get; set; }
+
+	public Vector2 GetReboundVector() {
 		return Vector2.Reflect(-impactVector.normalized, GetSumContactNormal());
 	}
 
@@ -25,9 +27,9 @@ public class BallCollisionManager : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
 		collisions.Add(collision2D);
-		if (!ball.state.grounded)
+		if (!ballIsGrounded)
 			impactVector = collision2D.relativeVelocity;
-		ball.state.grounded = true;
+		ballIsGrounded = true;
 	}
 
 	void OnCollisionExit2D(Collision2D collision2D) {
@@ -37,14 +39,11 @@ public class BallCollisionManager : MonoBehaviour {
 				collisions.RemoveAt(i);
 			else
 				i++;
-			if (i < collisions.Count)
-				continue;
-			else
+			if (i >= collisions.Count)
 				break;
 		}
 		if (collisions.Count == 0) {
-			// DisableSticky();
-			ball.state.grounded = false;
+			ballIsGrounded = false;
 		}
 	}
 }

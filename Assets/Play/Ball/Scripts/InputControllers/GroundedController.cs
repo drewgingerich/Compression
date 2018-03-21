@@ -4,31 +4,41 @@ using UnityEngine;
 
 public class GroundedController : BallController {
 
-	Ball ball;
-	// float maxStickyTime = 0.3f;
+	float maxStickyTime = 0.25f;
 
-	public GroundedController (Ball ball) {
-		this.ball = ball;
-	}
-
-	public override BallController CheckTransitions() {
-		if (!ball.state.grounded) {
-			return new AirbornController (ball);
+	public override BallController CheckTransitions(Ball ball) {
+		if (!ball.collisionManager.ballIsGrounded) {
+			return new AirbornController();
 		}
 		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
-		Vector2 sumNormal = ball.collisionManager.GetSumContactNormal ();
-		if (Vector2.Dot (inputDirection, sumNormal) < 0) {
-			return new CompressedController (ball);
+		Vector2 reboundVector = ball.collisionManager.GetReboundVector();
+		if (Vector2.Dot(inputDirection, reboundVector) < 0) {
+			return CompressedControllerFactory.GetCompressedController(ball.inputScheme); 
 		}
 		return null;
 	}
 
-	public override void Enter() {
-		ball.state.timeGrounded = 0f;
+	public override void Enter(Ball ball) {
+		ball.collisionManager.timeGrounded = 0f;
+		ball.stickyManager.ballIsSticky = true;
+		Rigidbody2D rb2d = ball.collisionManager.gameObject.GetComponent<Rigidbody2D>();
+		rb2d.gravityScale = 0f;
+		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
 
-	public override void Update () {
-		ball.state.timeGrounded += Time.deltaTime;
+	public override void Exit(Ball ball) {
+		Rigidbody2D rb2d = ball.collisionManager.gameObject.GetComponent<Rigidbody2D>();
+		rb2d.gravityScale = 1f;
+	}
+
+	public override void Update(Ball ball) {
+		ball.collisionManager.timeGrounded += Time.deltaTime;
+		if (ball.collisionManager.timeGrounded >= maxStickyTime) {
+			Rigidbody2D rb2d = ball.collisionManager.gameObject.GetComponent<Rigidbody2D>();
+			rb2d.gravityScale = 1f;	
+			ball.stickyManager.ballIsSticky = false;
+		}
+		// if (ball.collisionManager.timeGround
 		// Vector2 inputDirection = ball.controlScheme.direction;
 		// ball.gameObject.GetComponent<Rigidbody2D> ().AddForce (inputDirection);
 		// if (ball.sticky) {

@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class AirbornController : BallController {
 
-	Ball ball;
-
-	public AirbornController (Ball ball) {
-		this.ball = ball;
-	}
-
-	public override BallController CheckTransitions() {
-		if (ball.state.grounded)
-			return new GroundedController (ball);
+	public override BallController CheckTransitions(Ball ball) {
+		if (ball.collisionManager.ballIsGrounded)
+			return new GroundedController();
 		return null;
 	}
 
-	public override void Update () {
+	public override void Enter(Ball ball) {
+		if (ball.stickyManager.ballIsSticky)
+			ball.stickyManager.DisableSticky(ball);
+	}
+	public override void Update(Ball ball) {
 		// Vector2 inputDirection = ball.controlScheme.direction;
 		// ball.gameObject.GetComponent<Rigidbody2D> ().AddForce (inputDirection * ball.speed);
 	}

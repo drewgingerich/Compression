@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public abstract class BallController {
 
-	public abstract BallController CheckTransitions();
-	public virtual void Update() { }
-	public virtual void Enter() { }
-	public virtual void Exit() {}
+	public abstract BallController CheckTransitions(Ball ball);
+	public virtual void Update(Ball ball) { }
+	public virtual void Enter(Ball ball) { }
+	public virtual void Exit(Ball ball) {}
 }
