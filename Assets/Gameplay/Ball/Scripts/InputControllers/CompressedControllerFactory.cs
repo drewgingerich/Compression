@@ -11,7 +11,7 @@ public static class CompressedControllerFactory {
 			case InputScheme.InputType.Tilt:
 			case InputScheme.InputType.Touch:
 			case InputScheme.InputType.Keys:
-				return new KeyboardCompressedController();
+				return new CompressedController();
 			default:
 				return null;
 		}

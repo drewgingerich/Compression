@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 
-	// public event System.Action<Ball> OnDie;
-
-	// public AimBarBehavior aimBar;
-	// public BallSpriteBehavior ballSprite;
-	// public Animator animator;
-
 	public InputScheme inputScheme;
 	public BallCollisionManager collisionManager;
 	public StickyStateManager stickyManager;
@@ -19,15 +13,8 @@ public class Ball : MonoBehaviour {
 	[SerializeField] BallController controller;
 
 	void Awake() {
-		inputScheme = new KeyboardInputScheme("Horizontal", "Vertical"); 
 		controller = new AirbornController();
 	}
-
-	// public void Die () {
-	// 	if (OnDie != null)
-	// 		OnDie (this);
-	// 	Destroy (gameObject);
-	// }
 
 	void FixedUpdate () {
 		bool checkForTransition = true;
