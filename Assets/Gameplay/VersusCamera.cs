@@ -5,8 +5,14 @@ using UnityEngine;
 public class VersusCamera : MonoBehaviour {
 
 	[SerializeField] float maxMovementSpeed = 1;
+	[SerializeField] float maxSizeSpeed = 1;
+	[SerializeField] float baseOrthographicSize = 6;
+	[SerializeField] float buffer = 0.5f;
 	[SerializeField] Transform fallback;
+
+	new Camera camera;
 	List<GameObject> registeredBalls;
+	float aspectRatio;
 
 	public void RegisterBall(GameObject ball) {
 		registeredBalls.Add(ball);
@@ -18,11 +24,17 @@ public class VersusCamera : MonoBehaviour {
 
 	void Awake() {
 		registeredBalls = new List<GameObject>();
+		camera = GetComponent<Camera>();
+		aspectRatio = (float)Screen.width / Screen.height;
 	}
 
 	void Update() {
 		Vector3 centerPosition = FindCenterPosition();
-		transform.position = SmoothMovement(transform.position, centerPosition, maxMovementSpeed);
+		Vector3 smoothedPosition = SmoothMovement(transform.position, centerPosition, maxMovementSpeed);
+		transform.position = smoothedPosition;
+		float orthographicSize = FindOrthographicSize(smoothedPosition, aspectRatio);
+		float smoothedOrthographicSize = SmoothSizeChange(camera.orthographicSize, orthographicSize, maxSizeSpeed);
+		camera.orthographicSize = smoothedOrthographicSize;
 	}
 
 	Vector3 FindCenterPosition() {
@@ -41,8 +53,34 @@ public class VersusCamera : MonoBehaviour {
 		float maxMovement = maxMovementSpeed * Time.deltaTime;
 		Vector3 movementVector = targetPosition - position;
 		float movement = movementVector.magnitude;
-		if (movement >= maxMovement)
+		if (movement > maxMovement)
 			targetPosition = transform.position + movementVector * maxMovement;
 		return targetPosition;	
+	}
+	
+	float FindOrthographicSize(Vector3 centerPosition, float aspectRatio) {
+		Vector2 cornerVector = Vector2.zero;
+		foreach (GameObject ball in registeredBalls) {
+			float verticalDistance = Mathf.Abs(centerPosition.y - ball.transform.position.y);
+			if (verticalDistance > cornerVector.y) {
+				cornerVector.y = verticalDistance;
+			}
+			float horizontalDistance = Mathf.Abs(centerPosition.x - ball.transform.position.x);
+			float scaleHorizontalDistance = horizontalDistance / aspectRatio;
+			if (scaleHorizontalDistance > cornerVector.x)
+				cornerVector.x = scaleHorizontalDistance;
+		}
+		cornerVector += new Vector2(buffer, buffer);
+		float verticalSize = Mathf.Max(cornerVector.y, baseOrthographicSize);
+		float horizontalSize = Mathf.Max(cornerVector.x, baseOrthographicSize);
+		return Mathf.Max(verticalSize, horizontalSize);
+	}
+
+	float SmoothSizeChange(float size, float targetSize, float maxSizeSpeed) {
+		float maxMovement = maxSizeSpeed * Time.deltaTime;
+		float movement = targetSize - size;
+		if (movement > maxMovement)
+			targetSize = size + maxMovement;
+		return targetSize;
 	}
 }
