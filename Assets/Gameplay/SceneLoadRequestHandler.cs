@@ -11,6 +11,7 @@ public class SceneLoadRequestHandler : MonoBehaviour {
 	}
 
 	public void RequestSceneLoad(string sceneName) {
-		gameManager.LoadScene(sceneName);
+		if (gameManager != null)
+			gameManager.LoadScene(sceneName);
 	}
 }

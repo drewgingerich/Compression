@@ -13,6 +13,7 @@ public class ActivePlayerManager : MonoBehaviour {
 
 	public OnPlayerJoinedEvent onPlayerJoined;
 	public OnPlayerLeftEvent onPlayerLeft;
+	public UnityEvent onAllPlayersLeft;
 
 	public static List<InputScheme> players;
 
@@ -32,5 +33,7 @@ public class ActivePlayerManager : MonoBehaviour {
 	public void RemovePlayer(GameObject player) {
 		players.Remove(player.GetComponent<Ball>().inputScheme);
 		onPlayerLeft.Invoke(player.GetComponent<Ball>().inputScheme);
+		if (players.Count == 0)
+			onAllPlayersLeft.Invoke();
 	}
 }
