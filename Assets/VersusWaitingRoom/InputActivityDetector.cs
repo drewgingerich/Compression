@@ -20,10 +20,17 @@ public class InputActivityDetector : MonoBehaviour {
 			Vector2 inputDirection = input.GetInputDirection();
 			if (inputDirection != Vector2.zero) {
 				onActiveInput.Invoke(input);
-				inputs.Remove(input);
 			} else {
 				i++;
 			}
 		}
+	}
+	
+	public void AddInputScheme(InputScheme inputScheme) {
+		inputs.Add(inputScheme);
+	}
+
+	public void RemoveInputScheme(InputScheme inputScheme) {
+		inputs.Remove(inputScheme);
 	}
 }
