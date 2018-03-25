@@ -39,9 +39,13 @@ public class EntranceZone : MonoBehaviour {
 	void CheckIfAllPlayersAreReady() {
 		if (playersReady.Count < 2)
 			return;
-		if (playersReady.Count == registeredPlayers.Count) {
-			PlayerManager.players = (from go in playersReady select go.GetComponent<Ball>().inputScheme) as List<InputScheme>;
-			onAllPlayersReady.Invoke();
+		if (playersReady.Count != registeredPlayers.Count)
+			return;
+		var players = new List<InputScheme>();
+		foreach (GameObject playerObject in playersReady) {
+			players.Add(playerObject.GetComponent<Ball>().inputScheme);
 		}
+		PlayerManager.players = players;
+		onAllPlayersReady.Invoke();
 	}
 }
