@@ -29,17 +29,17 @@ public class VersusCamera : MonoBehaviour {
 	}
 
 	void Update() {
-		if (registeredBalls.Count == 0)
-			return;
-		int i = 0;
-		while (true) {
-			if (registeredBalls[i] == null)
-				registeredBalls.RemoveAt(i);
-			else
-				i++;
-			if (i >= registeredBalls.Count)
-				break;
-		}
+		// if (registeredBalls.Count == 0)
+		// 	return;
+		// int i = 0;
+		// while (true) {
+		// 	if (registeredBalls[i] == null)
+		// 		registeredBalls.RemoveAt(i);
+		// 	else
+		// 		i++;
+		// 	if (i >= registeredBalls.Count)
+		// 		break;
+		// }
 		Vector3 centerPosition = FindCenterPosition();
 		Vector3 smoothedPosition = SmoothMovement(transform.position, centerPosition, maxMovementSpeed);
 		transform.position = smoothedPosition;
@@ -49,12 +49,13 @@ public class VersusCamera : MonoBehaviour {
 	}
 
 	Vector3 FindCenterPosition() {
-		if (registeredBalls.Count == 0)
-			return new Vector3 (fallback.position.x, fallback.position.y, transform.position.z);
 		Vector3 centerPosition = Vector3.zero;
 		foreach (GameObject ball in registeredBalls) {
-			centerPosition += ball.transform.position;
+			if (ball != null)
+				centerPosition += ball.transform.position;
 		}
+		if (centerPosition == Vector3.zero)
+			return new Vector3 (fallback.position.x, fallback.position.y, transform.position.z);
 		centerPosition *= 1f / registeredBalls.Count;
 		centerPosition.z = transform.position.z;
 		return centerPosition;
