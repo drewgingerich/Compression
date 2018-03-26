@@ -37,7 +37,7 @@ public class VersusCamera : MonoBehaviour {
 				registeredBalls.RemoveAt(i);
 			else
 				i++;
-			if (i < registeredBalls.Count)
+			if (i >= registeredBalls.Count)
 				break;
 		}
 		Vector3 centerPosition = FindCenterPosition();

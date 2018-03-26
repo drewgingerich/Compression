@@ -10,7 +10,6 @@ public class GroundedController : BallController {
 		if (!ball.collisionManager.ballIsGrounded) {
 			return new AirbornController();
 		}
-		Debug.Log(ball.playerInfo.inputScheme.GetInputDirection());
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		Vector2 reboundVector = ball.collisionManager.GetReboundVector();
 		if (Vector2.Dot(inputDirection, reboundVector) < 0) {
