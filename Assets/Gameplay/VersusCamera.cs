@@ -29,6 +29,17 @@ public class VersusCamera : MonoBehaviour {
 	}
 
 	void Update() {
+		if (registeredBalls.Count == 0)
+			return;
+		int i = 0;
+		while (true) {
+			if (registeredBalls[i] == null)
+				registeredBalls.RemoveAt(i);
+			else
+				i++;
+			if (i < registeredBalls.Count)
+				break;
+		}
 		Vector3 centerPosition = FindCenterPosition();
 		Vector3 smoothedPosition = SmoothMovement(transform.position, centerPosition, maxMovementSpeed);
 		transform.position = smoothedPosition;

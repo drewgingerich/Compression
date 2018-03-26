@@ -7,7 +7,9 @@ public class VersusStarter : MonoBehaviour {
 	public PlayerEvent OnActiveInputScheme;
 
 	void Start() {
-		foreach (PlayerInfo player in PlayerManager.players)
-			OnActiveInputScheme.Invoke(player);
+		foreach (PlayerInfo player in PlayerManager.players) {
+			if (player != null)
+				OnActiveInputScheme.Invoke(player);
+		}
 	}
 }

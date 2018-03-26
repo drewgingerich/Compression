@@ -15,12 +15,12 @@ public class BallSpawner : MonoBehaviour {
 	
 	int numberSpawned = 0;
 
-	public void SpawnBall(PlayerInfo player) {
+	public void SpawnBall(PlayerInfo playerInfo) {
 		Ball newBall = Instantiate(ballPrefab);
 		Transform activeSpawn = spawnPoints[numberSpawned];
 		numberSpawned = (numberSpawned + 1) % spawnPoints.Count;
 		newBall.transform.position = new Vector3(activeSpawn.position.x, activeSpawn.position.y, newBall.transform.position.z);
-		newBall.playerInfo = player;
+		newBall.playerInfo = playerInfo;
 		newBall.transform.parent = transform;
 		OnSpawnBall.Invoke(newBall.gameObject);
 	}
