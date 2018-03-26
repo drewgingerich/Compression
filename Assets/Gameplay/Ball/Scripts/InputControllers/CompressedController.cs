@@ -8,7 +8,6 @@ public class CompressedController : BallController {
 	protected float maxTimeCompressed = 0.5f;
 	protected float maxLaunchAngle = 50f;
 	protected Vector2 releaseVector;
-	float reboundTimeout = 1f;
 	float maxAngularVelocity = 50f;
 	Vector2 lastDirection;
 
@@ -41,7 +40,7 @@ public class CompressedController : BallController {
 		if (!ball.collisionManager.ballIsGrounded) {
 			return new AirbornController();
 		}
-		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
+		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		if (inputDirection == Vector2.zero) {
 			LaunchBall(ball, releaseVector);
 			return new AirbornController();
@@ -61,7 +60,7 @@ public class CompressedController : BallController {
 			referenceVector = ball.collisionManager.GetReboundVector();
 		else
 			referenceVector = ball.collisionManager.GetSumContactNormal();
-		Vector2 inputDirection = ball.inputScheme.GetInputDirection();
+		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		Vector2 clampedDirection = ClampDirection(inputDirection, -referenceVector.normalized);
 		Vector2 smoothedDirection = SmoothDirectionChange(clampedDirection, lastDirection, maxAngularVelocity);
 		lastDirection = smoothedDirection;

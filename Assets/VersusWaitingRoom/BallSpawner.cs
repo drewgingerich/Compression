@@ -21,7 +21,6 @@ public class BallSpawner : MonoBehaviour {
 		numberSpawned = (numberSpawned + 1) % spawnPoints.Count;
 		newBall.transform.position = new Vector3(activeSpawn.position.x, activeSpawn.position.y, newBall.transform.position.z);
 		newBall.playerInfo = player;
-		newBall.inputScheme = player.inputScheme;
 		newBall.transform.parent = transform;
 		OnSpawnBall.Invoke(newBall.gameObject);
 	}
