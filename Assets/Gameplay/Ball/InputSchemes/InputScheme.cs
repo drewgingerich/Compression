@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class InputSchemeEvent : UnityEvent<InputScheme> { }
 
 [CreateAssetMenu(fileName = "New Input Scheme", menuName = "Input Scheme")]
 public class InputScheme : ScriptableObject {

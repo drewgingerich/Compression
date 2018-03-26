@@ -6,22 +6,12 @@ using UnityEngine.Events;
 
 public class EntranceZone : MonoBehaviour {
 
-	public UnityEvent onAllPlayersReady;
+	public UnityEvent OnAllPlayersReady;
 
-	List<GameObject> registeredPlayers;
 	List<GameObject> playersReady;
 
 	void Awake() {
-		registeredPlayers = new List<GameObject>();
 		playersReady = new List<GameObject>();
-	}
-
-	public void RegisterPlayer(GameObject player) {
-		registeredPlayers.Add(player);
-	}
-
-	public void DergisterPlayer(GameObject player) {
-		registeredPlayers.Remove(player);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
@@ -37,15 +27,11 @@ public class EntranceZone : MonoBehaviour {
 	}
 
 	void CheckIfAllPlayersAreReady() {
-		if (playersReady.Count < 2)
+		int numberOfPlayers = PlayerManager.GetNumberOfPlayers();
+		if (numberOfPlayers < 2)
 			return;
-		if (playersReady.Count != registeredPlayers.Count)
+		if (playersReady.Count != numberOfPlayers)
 			return;
-		var players = new List<InputScheme>();
-		foreach (GameObject playerObject in playersReady) {
-			players.Add(playerObject.GetComponent<Ball>().inputScheme);
-		}
-		PlayerManager.players = players;
-		onAllPlayersReady.Invoke();
+		OnAllPlayersReady.Invoke();
 	}
 }

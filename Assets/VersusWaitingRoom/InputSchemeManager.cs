@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class OnActiveInputEvent : UnityEvent<InputScheme> {}
+public class InputSchemeManager : MonoBehaviour {
 
-public class InputActivityDetector : MonoBehaviour {
-
-	public OnActiveInputEvent onActiveInput;
 	[SerializeField] List<InputScheme> inputs;
+
+	public InputSchemeEvent OnActiveInputScheme;
 
 	void Update () {
 		int i = 0;
@@ -19,18 +17,19 @@ public class InputActivityDetector : MonoBehaviour {
 			InputScheme input = inputs[i];
 			Vector2 inputDirection = input.GetInputDirection();
 			if (inputDirection != Vector2.zero) {
-				onActiveInput.Invoke(input);
+				OnActiveInputScheme.Invoke(input);
+				DergisterInputScheme(input);
 			} else {
 				i++;
 			}
 		}
 	}
 	
-	public void AddInputScheme(InputScheme inputScheme) {
+	public void RegisterInputScheme(InputScheme inputScheme) {
 		inputs.Add(inputScheme);
 	}
 
-	public void RemoveInputScheme(InputScheme inputScheme) {
+	public void DergisterInputScheme(InputScheme inputScheme) {
 		inputs.Remove(inputScheme);
 	}
 }

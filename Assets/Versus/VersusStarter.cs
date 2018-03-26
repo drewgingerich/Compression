@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class VersusStarter : MonoBehaviour {
 
-	public OnPlayerJoinedEvent onPlayerJoined;
+	public PlayerEvent OnActiveInputScheme;
 
 	void Start() {
-		foreach (InputScheme input in PlayerManager.players)
-			onPlayerJoined.Invoke(input);
+		foreach (PlayerInfo player in PlayerManager.players)
+			OnActiveInputScheme.Invoke(player);
 	}
 }

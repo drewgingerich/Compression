@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour {
 
 	public event System.Action<GameObject> OnDie = delegate { };
 
+	public PlayerInfo playerInfo;
 	public InputScheme inputScheme;
 	public BallCollisionManager collisionManager;
 	public StickyStateManager stickyManager;

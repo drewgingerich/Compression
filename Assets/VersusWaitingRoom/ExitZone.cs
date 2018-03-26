@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class OnPlayerLeaveEvent : UnityEvent<GameObject> {}
-
 public class ExitZone : MonoBehaviour {
 
-	public OnPlayerLeaveEvent onPlayerLeave;
+	public BallObjectEvent OnBallDestroyed;
+	public PlayerEvent OnPlayerLeave;
+
 	void OnTriggerEnter2D(Collider2D other) {
-		onPlayerLeave.Invoke(other.gameObject);
+		OnBallDestroyed.Invoke(other.gameObject);
+		OnPlayerLeave.Invoke(other.GetComponent<Ball>().playerInfo);
 		Destroy(other.gameObject);
 	}
 }
