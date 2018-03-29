@@ -13,7 +13,7 @@ public class GroundedController : BallController {
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		Vector2 reboundVector = ball.collisionManager.GetReboundVector();
 		if (Vector2.Dot(inputDirection, reboundVector) < 0) {
-			return CompressedControllerFactory.GetCompressedController(ball.playerInfo.inputScheme); 
+			return CompressedControllerFactory.GetCompressedController(ball.playerInfo.inputScheme);
 		}
 		return null;
 	}
