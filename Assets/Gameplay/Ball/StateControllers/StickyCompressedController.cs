@@ -17,7 +17,7 @@ public class StickyCompressedController : BallController {
 		ball.animator.SetBool("Squished", true);
 		Rigidbody2D rb2d = ball.GetComponent<Rigidbody2D>();
 		rb2d.gravityScale = 0;
-		lastDirection = -ball.collisionManager.GetReboundVector();
+		lastDirection = FindStartingInputDirection(ball);
 	}
 
 	public override void Exit(Ball ball) {
@@ -58,6 +58,17 @@ public class StickyCompressedController : BallController {
 
 	protected float FindMagnitude(Vector2 direction, Vector2 referenceVector) {
 		return referenceVector.magnitude;
+	}
+
+	protected Vector2 FindStartingInputDirection(Ball ball) {
+		Vector2 contactNormalReference = -ball.collisionManager.GetSumContactNormal();
+		Vector2 reboundDirectionReference = -ball.collisionManager.GetReboundVector().normalized;
+		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
+		inputDirection = ClampDirection(inputDirection, contactNormalReference, 45f);
+		Debug.Log(inputDirection);
+		if (Vector2.Angle(reboundDirectionReference, inputDirection) < 15f)
+			inputDirection = reboundDirectionReference;
+		return inputDirection;
 	}
 
 	protected void LaunchBall(Ball ball, Vector2 launchDirection) {

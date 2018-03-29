@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AirbornController : BallController {
 
+	float timeInState;
+	float lag = 0.1f;
+
 	public override BallController CheckTransitions(Ball ball) {
 		if (CheckStickyGroundedTransition(ball))
 			return new StickyGroundedController();
@@ -13,6 +16,7 @@ public class AirbornController : BallController {
 	public override void Enter(Ball ball) {
 		Rigidbody2D rb2d = ball.GetComponent<Rigidbody2D>();
 		rb2d.gravityScale = 1f;
+		timeInState = 0f;
 	}
 
 	// public override void Update(Ball ball) {
@@ -21,6 +25,7 @@ public class AirbornController : BallController {
 	// }
 
 	bool CheckStickyGroundedTransition(Ball ball) {
-		return ball.collisionManager.ballIsGrounded;
+		timeInState += Time.deltaTime;
+		return ball.collisionManager.ballIsGrounded && timeInState >= lag;
 	}
 }
