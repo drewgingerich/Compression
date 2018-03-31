@@ -19,18 +19,17 @@ public class StickyGroundedController : BallController {
 
 	public override void Enter(Ball ball) {
 		timeInState = 0f;
-		Rigidbody2D rb2d = ball.GetComponent<Rigidbody2D>();
-		rb2d.gravityScale = 0f;
-		rb2d.velocity = rb2d.velocity * 0.5f;
+		ball.state.CurrentGravity = 1f;
+		ball.rb2d.velocity = ball.rb2d.velocity * 0.5f;
 	}
 	
 	bool CheckAirbornTransition(Ball ball) {
-		return !ball.collisionManager.ballIsGrounded ? true : false;
+		return !ball.state.Grounded ? true : false;
 	}
 
 	bool CheckStickyCompressedTransition(Ball ball) {
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
-		Vector2 surfaceNormal = ball.collisionManager.GetSumContactNormal();
+		Vector2 surfaceNormal = ball.state.ContactNormal;
 		return Vector2.Dot(inputDirection, surfaceNormal) < 0 ? true : false;
 	}
 

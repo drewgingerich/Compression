@@ -33,7 +33,7 @@ public class CompressedController : BallController {
 	}
 
 	public override void Update(Ball ball) {
-		Vector2 referenceVector = ball.collisionManager.GetSumContactNormal();
+		Vector2 referenceVector = ball.state.ContactNormal;
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		Vector2 clampedDirection = ClampDirection(inputDirection, -referenceVector.normalized, maxLaunchAngle);
 		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
@@ -63,7 +63,7 @@ public class CompressedController : BallController {
 	}
 	
 	protected bool CheckAirbornTransition(Ball ball) {
-		return !ball.collisionManager.ballIsGrounded ? true : false;
+		return !ball.state.Grounded ? true : false;
 	}
 
 	protected bool CheckLaunchTransition(Ball ball) {

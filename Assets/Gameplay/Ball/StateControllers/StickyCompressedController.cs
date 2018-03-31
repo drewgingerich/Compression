@@ -15,8 +15,7 @@ public class StickyCompressedController : BallController {
 		timeCompressed = 0f;
 		ball.aimBar.Show();
 		ball.animator.SetBool("Squished", true);
-		Rigidbody2D rb2d = ball.GetComponent<Rigidbody2D>();
-		rb2d.gravityScale = 0;
+		ball.state.CurrentGravity = 0;
 		lastDirection = FindStartingInputDirection(ball);
 	}
 
@@ -37,9 +36,9 @@ public class StickyCompressedController : BallController {
 
 	public override void Update(Ball ball) {
 		timeCompressed += Time.deltaTime;
-		Vector2 referenceVector = ball.collisionManager.GetReboundVector();
+		Vector2 referenceVector = ball.state.ReboundDirection;
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
-		Vector2 clampedDirection = ClampDirection(inputDirection, -referenceVector.normalized, maxLaunchAngle);
+		Vector2 clampedDirection = ClampDirection(inputDirection, -referenceVector, maxLaunchAngle);
 		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
 		lastDirection = smoothedDirection;
 		float magnitude = FindMagnitude(smoothedDirection, referenceVector);
@@ -61,11 +60,10 @@ public class StickyCompressedController : BallController {
 	}
 
 	protected Vector2 FindStartingInputDirection(Ball ball) {
-		Vector2 contactNormalReference = -ball.collisionManager.GetSumContactNormal();
-		Vector2 reboundDirectionReference = -ball.collisionManager.GetReboundVector().normalized;
+		Vector2 contactNormalReference = -ball.state.ContactNormal;
+		Vector2 reboundDirectionReference = -ball.state.ReboundDirection;
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
 		inputDirection = ClampDirection(inputDirection, contactNormalReference, 45f);
-		Debug.Log(inputDirection);
 		if (Vector2.Angle(reboundDirectionReference, inputDirection) < 15f)
 			inputDirection = reboundDirectionReference;
 		return inputDirection;
@@ -78,7 +76,7 @@ public class StickyCompressedController : BallController {
 	}
 
 	protected bool CheckAirbornTransition(Ball ball) {
-		return !ball.collisionManager.ballIsGrounded ? true : false;
+		return !ball.state.Grounded ? true : false;
 	}
 
 	protected bool CheckLaunchTransition(Ball ball) {

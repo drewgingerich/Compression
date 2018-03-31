@@ -4,30 +4,40 @@ using UnityEngine;
 
 public class GravityWell : MonoBehaviour {
 
-	[SerializeField] float strength = 1f;
+	[SerializeField] float baseStrength = 1f;
+	[SerializeField] float radialStrength = -1.75f;
+	[SerializeField] List<Collider2D> victims;
 
-	[SerializeField] List<Rigidbody2D> victims;
-
-	public void AddVictim(Rigidbody2D victim) {
+	public void AddVictim(Collider2D victim) {
+		Ball ball = victim.GetComponent<Ball>();
+		if (ball == null)
+			return;
 		victims.Add(victim);
 	}
 
-	public void RemoveVictim(Rigidbody2D victim) {
-		Debug.Log("Hi");
+	public void RemoveVictim(Collider2D victim) {
+		Ball ball = victim.GetComponent<Ball>();
+		if (ball == null)
+			return;
 		victims.Remove(victim);
+		ball.state.BaseGravity = 1f;
 	}
 
 	void Awake() {
-		victims = new List<Rigidbody2D> ();
+		victims = new List<Collider2D> ();
 	}
 
 	void FixedUpdate() {
-		foreach(Rigidbody2D victim in victims) {
+		foreach(Collider2D victim in victims) {
+			Ball ball = victim.GetComponent<Ball>();
+			if (ball == null)
+				return;
+			ball.state.BaseGravity = 0;
 			Vector3 distanceVector = transform.position - victim.transform.position;
 			float distance = distanceVector.magnitude;
-			float gravityMagnitude = strength * victim.mass * Mathf.Pow(distance, -2f);
+			float gravityMagnitude = baseStrength * ball.rb2d.mass * Mathf.Pow(distance, radialStrength);
 			Vector3 gravityForce = distanceVector.normalized * gravityMagnitude;
-			victim.AddForce(gravityForce);
+			ball.rb2d.AddForce(gravityForce);
 		}
 	}
 }

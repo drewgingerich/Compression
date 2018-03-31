@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class OnTrigger2DEvent : UnityEvent<Rigidbody2D> {}
+public class OnTrigger2DEvent : UnityEvent<Collider2D> {}
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class ArcCollider : MonoBehaviour {
@@ -29,7 +29,7 @@ public class ArcCollider : MonoBehaviour {
 			if (!others.Contains(other))
 				Add(other);
 			else
-				OnStayArc.Invoke(other.GetComponent<Rigidbody2D>());
+				OnStayArc.Invoke(other);
 		} else {
 			Remove(other);
 		}
@@ -47,14 +47,12 @@ public class ArcCollider : MonoBehaviour {
 
 	void Add(Collider2D other) {
 		others.Add(other);
-		Rigidbody2D rb2d = other.GetComponent<Rigidbody2D>();
-		OnEnterArc.Invoke(rb2d);
+		OnEnterArc.Invoke(other);
 	}
 
 	void Remove(Collider2D other) {
 		others.Remove(other);
-		Rigidbody2D rb2d = other.GetComponent<Rigidbody2D>();
-		OnExitArc.Invoke(rb2d);
+		OnExitArc.Invoke(other);
 	}
 
 	float FindAngle(Vector3 otherPosition) {

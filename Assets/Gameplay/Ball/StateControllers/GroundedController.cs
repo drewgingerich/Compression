@@ -13,18 +13,17 @@ public class GroundedController : BallController {
 	}
 
 	public override void Enter(Ball ball) {
-		Rigidbody2D rb2d = ball.collisionManager.gameObject.GetComponent<Rigidbody2D>();
-		rb2d.gravityScale = 1f;
+		ball.state.CurrentGravity = 1f;
 	}
 
 	bool CheckAirbornTransition(Ball ball) {
-		return !ball.collisionManager.ballIsGrounded ? true : false;
+		return !ball.state.Grounded ? true : false;
 	}
 
 	bool CheckCompressedTransition(Ball ball) {
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
-		Vector2 surfaceNormal = ball.collisionManager.GetSumContactNormal();
-		return Vector2.Dot(inputDirection, surfaceNormal) < 0 ? true : false;
+		Vector2 contactNormal = ball.state.ContactNormal;
+		return Vector2.Dot(inputDirection, contactNormal) < 0 ? true : false;
 	}
 }
 

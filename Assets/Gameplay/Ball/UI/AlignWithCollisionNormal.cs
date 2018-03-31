@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class AlignWithCollisionNormal : MonoBehaviour {
 
-	[SerializeField] BallCollisionManager collisionManager;
+	[SerializeField] Ball ball;
 
 	void Update() {
-		Vector2 normal = collisionManager.GetSumContactNormal();
+		Vector2 normal = ball.state.ContactNormal;
 		if (normal == Vector2.zero)
 			return;
 		RotateToNormal(normal);

@@ -6,8 +6,10 @@ public class Ball : MonoBehaviour {
 
 	public event System.Action<GameObject> OnDie = delegate { };
 
+	public BallState state;
 	public PlayerInfo playerInfo;
 	public BallCollisionManager collisionManager;
+	public Rigidbody2D rb2d;
 	public StickyStateManager stickyManager;
 	public Animator animator;
 	public AimBarUI aimBar;
@@ -16,6 +18,8 @@ public class Ball : MonoBehaviour {
 
 	void Awake() {
 		controller = new AirbornController();
+		state = new BallState(this);
+		rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	void FixedUpdate () {

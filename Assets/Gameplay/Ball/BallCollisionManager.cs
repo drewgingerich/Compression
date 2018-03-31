@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Ball))]
 public class BallCollisionManager : MonoBehaviour {
 
-	public bool ballIsGrounded;
-	public float timeGrounded;
-	public Vector2 impactVector { get; private set; }
-
+	Ball ball;
 	List<Collision2D> collisions { get; set; }
 
-	public Vector2 GetReboundVector() {
-		return Vector2.Reflect(-impactVector.normalized, GetSumContactNormal());
-	}
-
-	public Vector2 GetSumContactNormal() {
+	Vector2 GetContactNormal() {
 		Vector2 sumNormal = Vector2.zero;
 		foreach (Collision2D collision in collisions)
 			sumNormal += collision.contacts[0].normal;
@@ -23,13 +17,17 @@ public class BallCollisionManager : MonoBehaviour {
 
 	void Awake() {
 		collisions = new List<Collision2D>();
+		ball = GetComponent<Ball>();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
+		if (collisions.Count == 0) {
+			ball.state.ImpactMagnitude = collision2D.relativeVelocity.magnitude;
+			ball.state.ReboundDirection = collision2D.relativeVelocity.normalized * -1;
+			ball.state.Grounded = true;
+		}
 		collisions.Add(collision2D);
-		if (!ballIsGrounded)
-			impactVector = collision2D.relativeVelocity;
-		ballIsGrounded = true;
+		ball.state.ContactNormal = GetContactNormal();
 	}
 
 	void OnCollisionExit2D(Collision2D collision2D) {
@@ -42,8 +40,9 @@ public class BallCollisionManager : MonoBehaviour {
 			if (i >= collisions.Count)
 				break;
 		}
+		ball.state.ContactNormal = GetContactNormal();
 		if (collisions.Count == 0) {
-			ballIsGrounded = false;
+			ball.state.Grounded = false;
 		}
 	}
 }
