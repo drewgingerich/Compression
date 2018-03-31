@@ -25,7 +25,7 @@ public class GravityWell : MonoBehaviour {
 		foreach(Rigidbody2D victim in victims) {
 			Vector3 distanceVector = transform.position - victim.transform.position;
 			float distance = distanceVector.magnitude;
-			float gravityMagnitude = strength * victim.mass * Mathf.Pow(distance, -1.75f);
+			float gravityMagnitude = strength * victim.mass * Mathf.Pow(distance, -2f);
 			Vector3 gravityForce = distanceVector.normalized * gravityMagnitude;
 			victim.AddForce(gravityForce);
 		}
