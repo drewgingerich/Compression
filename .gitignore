@@ -4,6 +4,10 @@
 [Bb]uild/
 [Bb]uilds/
 Assets/AssetStoreTools*
+Unity\ Technologies/
+Unity\ Technologies.meta
+Recordings
+Recordings.meta
 
 # Visual Studio 2015 cache directory
 /.vs/

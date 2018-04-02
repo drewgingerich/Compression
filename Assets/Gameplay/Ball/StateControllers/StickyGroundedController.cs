@@ -19,7 +19,7 @@ public class StickyGroundedController : BallController {
 
 	public override void Enter(Ball ball) {
 		timeInState = 0f;
-		ball.state.CurrentGravity = 1f;
+		ball.state.CurrentGravity = 0f;
 		ball.rb2d.velocity = ball.rb2d.velocity * 0.5f;
 	}
 	

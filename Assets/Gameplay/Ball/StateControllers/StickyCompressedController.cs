@@ -15,7 +15,7 @@ public class StickyCompressedController : BallController {
 		timeCompressed = 0f;
 		ball.aimBar.Show();
 		ball.animator.SetBool("Squished", true);
-		ball.state.CurrentGravity = 0;
+		ball.state.CurrentGravity = 0f;
 		lastDirection = FindStartingInputDirection(ball);
 	}
 
