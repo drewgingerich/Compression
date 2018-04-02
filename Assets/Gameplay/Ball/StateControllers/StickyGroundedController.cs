@@ -29,8 +29,8 @@ public class StickyGroundedController : BallController {
 
 	bool CheckStickyCompressedTransition(Ball ball) {
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
-		Vector2 surfaceNormal = ball.state.ContactNormal;
-		return Vector2.Dot(inputDirection, surfaceNormal) < 0 ? true : false;
+		Vector2 contactNormal = ball.state.ContactNormal;
+		return Vector2.Dot(inputDirection, contactNormal) < 0 ? true : false;
 	}
 
 	bool CheckGroundedTransition(Ball ball) {

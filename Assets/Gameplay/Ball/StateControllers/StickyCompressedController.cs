@@ -6,6 +6,9 @@ public class StickyCompressedController : BallController {
 
 	protected float timeCompressed;
 	protected float maxTimeCompressed = 0.5f;
+	protected bool inAirLag;
+	protected float airLag = 0f;
+	protected float maxAirLag = 0.25f;
 	protected float maxLaunchAngle = 50f;
 	protected Vector2 releaseVector;
 	float maxAngularVelocity = 50f;
@@ -76,7 +79,14 @@ public class StickyCompressedController : BallController {
 	}
 
 	protected bool CheckAirbornTransition(Ball ball) {
-		return !ball.state.Grounded ? true : false;
+		if (ball.state.Grounded && !inAirLag)
+			return false;
+		if (!inAirLag) {
+			inAirLag = true;
+			return false;
+		}
+		airLag += Time.deltaTime;
+		return airLag >= maxAirLag ? true : false;
 	}
 
 	protected bool CheckLaunchTransition(Ball ball) {
