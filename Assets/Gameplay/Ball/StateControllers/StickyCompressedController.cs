@@ -9,7 +9,7 @@ public class StickyCompressedController : BallController {
 	protected bool inAirLag;
 	protected float airLag = 0f;
 	protected float maxAirLag = 0.25f;
-	protected float maxLaunchAngle = 50f;
+	protected float maxLaunchAngle = 85f;
 	protected Vector2 releaseVector;
 	float maxAngularVelocity = 50f;
 	Vector2 lastDirection;
@@ -19,10 +19,11 @@ public class StickyCompressedController : BallController {
 		ball.aimBar.Show();
 		ball.animator.SetBool("Squished", true);
 		ball.state.CurrentGravity = 0f;
-		lastDirection = FindStartingInputDirection(ball);
+		lastDirection = ball.playerInfo.inputScheme.GetInputDirection();
 	}
 
 	public override void Exit(Ball ball) {
+		ball.state.ImpactMagnitude = 0f;
 		ball.aimBar.Hide();
 		ball.animator.SetBool("Squished", false);
 	}
@@ -73,9 +74,15 @@ public class StickyCompressedController : BallController {
 	}
 
 	protected void LaunchBall(Ball ball, Vector2 launchDirection) {
-		float forceScaling = 450f;
-		Vector2 releaseForce = launchDirection * forceScaling;
-		ball.collisionManager.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
+		float angle = Vector2.Angle(ball.state.ReboundDirection, launchDirection);
+		float launchForce = 350;
+		if (angle <= 30) {
+			Debug.Log(ball.state.ImpactMagnitude);
+			float reboundScaling = 1.7f - 2f / (1f + ball.state.ImpactMagnitude);
+			launchForce *= reboundScaling;
+		}
+		Vector2 launchVector = launchDirection * launchForce;
+		ball.collisionManager.gameObject.GetComponent<Rigidbody2D>().AddForce(launchVector);
 	}
 
 	protected bool CheckAirbornTransition(Ball ball) {

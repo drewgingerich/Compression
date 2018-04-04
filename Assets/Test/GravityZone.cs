@@ -42,6 +42,7 @@ public class GravityZone : MonoBehaviour {
 				return;
 			Vector3 distanceVector = transform.position - victim.transform.position;
 			float distance = distanceVector.magnitude;
+			Debug.Log(distance);
 			Vector3 direction = distanceVector.normalized;
 			Vector3 totalForce = Vector3.zero;
 			foreach (GravityEffect effect in gravityEffects) {

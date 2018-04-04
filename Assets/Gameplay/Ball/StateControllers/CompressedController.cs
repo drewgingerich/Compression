@@ -9,7 +9,7 @@ public class CompressedController : BallController {
 	protected bool inAirLag;
 	protected float airLag = 0f;
 	protected float maxAirLag = 0.25f;
-	protected float maxLaunchAngle = 50f;
+	protected float maxLaunchAngle = 85f;
 	protected Vector2 releaseVector;
 	float maxAngularVelocity = 75f;
 	Vector2 lastDirection;
@@ -21,6 +21,7 @@ public class CompressedController : BallController {
 	}
 
 	public override void Exit(Ball ball) {
+		ball.state.ImpactMagnitude = 0f;
 		ball.aimBar.Hide();
 		ball.animator.SetBool("Squished", false);
 	}
