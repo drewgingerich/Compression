@@ -13,7 +13,9 @@ public class GroundedController : BallController {
 	}
 
 	public override void Enter(Ball ball) {
+		// Debug.Log("Grounded State");
 		ball.state.CurrentGravity = 1f;
+		ball.spriteRenderer.color = Color.black;
 	}
 
 	bool CheckAirbornTransition(Ball ball) {

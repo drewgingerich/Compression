@@ -5,24 +5,33 @@ using UnityEngine;
 [RequireComponent(typeof(Ball))]
 public class BallCollisionManager : MonoBehaviour {
 
+	Rigidbody2D rb2d;
 	Ball ball;
 	List<Collision2D> collisions { get; set; }
-
-
+	Vector2 impactVector;
 
 	void Awake() {
 		collisions = new List<Collision2D>();
 		ball = GetComponent<Ball>();
+		rb2d = GetComponent<Rigidbody2D>();
+	}
+
+	void FixedUpdate () {
+		if (collisions.Count == 0)
+			impactVector = rb2d.velocity;
+		// Debug.Log(impactVector);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
 		collisions.Add(collision2D);
+		Vector2 contactNormal = GetContactNormal();
+		ball.state.ContactNormal = contactNormal;
 		if (collisions.Count == 1) {
-			ball.state.ImpactMagnitude = collision2D.relativeVelocity.magnitude;
-			ball.state.ReboundDirection = GetReboundDirection(collision2D.relativeVelocity);
+			ball.state.ImpactMagnitude = impactVector.magnitude;
+			ball.state.ReboundDirection = GetReboundDirection(impactVector, contactNormal);
+			Debug.Log(ball.state.ReboundDirection);
 			ball.state.Grounded = true;
 		}
-		ball.state.ContactNormal = GetContactNormal();
 	}
 
 	void OnCollisionExit2D(Collision2D collision2D) {
@@ -38,6 +47,7 @@ public class BallCollisionManager : MonoBehaviour {
 		ball.state.ContactNormal = GetContactNormal();
 		if (collisions.Count == 0) {
 			ball.state.Grounded = false;
+			impactVector = Vector2.zero;
 		}
 	}
 
@@ -48,7 +58,8 @@ public class BallCollisionManager : MonoBehaviour {
 		return sumNormal.normalized;
 	}
 
-	Vector2 GetReboundDirection(Vector2 impactVector) {
-		return Vector2.Reflect(impactVector, GetContactNormal()).normalized * -1;
+	Vector2 GetReboundDirection(Vector2 impactVector, Vector2 contactNormal) {
+		Vector2 reboundVector = Vector2.Reflect(impactVector, contactNormal);
+		return reboundVector.normalized;
 	}
 }

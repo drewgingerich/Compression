@@ -16,6 +16,7 @@ public class AirbornController : BallController {
 	public override void Enter(Ball ball) {
 		ball.state.CurrentGravity = ball.state.BaseGravity;
 		timeInState = 0f;
+		ball.spriteRenderer.color = Color.white;
 	}
 
 	// public override void Update(Ball ball) {

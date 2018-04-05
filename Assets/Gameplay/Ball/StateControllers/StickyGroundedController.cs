@@ -18,9 +18,11 @@ public class StickyGroundedController : BallController {
 	}
 
 	public override void Enter(Ball ball) {
+		// Debug.Log("StickyGrounded State");
 		timeInState = 0f;
 		ball.state.CurrentGravity = 0f;
 		ball.rb2d.velocity = ball.rb2d.velocity * 0.5f;
+		ball.spriteRenderer.color = Color.yellow;
 	}
 	
 	bool CheckAirbornTransition(Ball ball) {

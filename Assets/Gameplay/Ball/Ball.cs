@@ -13,13 +13,13 @@ public class Ball : MonoBehaviour {
 	public StickyStateManager stickyManager;
 	public Animator animator;
 	public AimBarUI aimBar;
+	public SpriteRenderer spriteRenderer;
 
 	[SerializeField] BallController controller;
 
 	void Awake() {
 		controller = new AirbornController();
 		state = new BallState(this);
-		rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	void FixedUpdate () {

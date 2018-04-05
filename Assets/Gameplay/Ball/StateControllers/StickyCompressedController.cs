@@ -15,11 +15,13 @@ public class StickyCompressedController : BallController {
 	Vector2 lastDirection;
 
 	public override void Enter(Ball ball) {
+		// Debug.Log("StickyCompressed State");
 		timeCompressed = 0f;
 		ball.aimBar.Show();
 		ball.animator.SetBool("Squished", true);
 		ball.state.CurrentGravity = 0f;
 		lastDirection = ball.playerInfo.inputScheme.GetInputDirection();
+		ball.spriteRenderer.color = Color.red;
 	}
 
 	public override void Exit(Ball ball) {
@@ -76,11 +78,15 @@ public class StickyCompressedController : BallController {
 	protected void LaunchBall(Ball ball, Vector2 launchDirection) {
 		float angle = Vector2.Angle(ball.state.ReboundDirection, launchDirection);
 		float launchForce = 350;
+		Debug.Log(string.Format("ReboundDirection: {0}, LaunchDirection: {1}, Angle: {2}", ball.state.ReboundDirection, launchDirection, angle));
 		if (angle <= 30) {
-			Debug.Log(ball.state.ImpactMagnitude);
 			float reboundScaling = 1.7f - 2f / (1f + ball.state.ImpactMagnitude);
 			launchForce *= reboundScaling;
 		}
+		// if (angle <= 30) {
+		// 	float reboundBoost = 100 * 0.2f * ball.state.ImpactMagnitude;
+		// 	launchForce += reboundBoost;
+		// }
 		Vector2 launchVector = launchDirection * launchForce;
 		ball.collisionManager.gameObject.GetComponent<Rigidbody2D>().AddForce(launchVector);
 	}

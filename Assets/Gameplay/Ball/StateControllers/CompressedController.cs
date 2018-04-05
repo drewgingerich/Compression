@@ -15,9 +15,11 @@ public class CompressedController : BallController {
 	Vector2 lastDirection;
 
 	public override void Enter(Ball ball) {
+		// Debug.Log("Compressed State");
 		ball.aimBar.Show();
 		ball.animator.SetBool("Squished", true);
 		lastDirection = ball.playerInfo.inputScheme.GetInputDirection();
+		ball.spriteRenderer.color = Color.blue;
 	}
 
 	public override void Exit(Ball ball) {
