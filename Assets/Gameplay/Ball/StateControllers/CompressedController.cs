@@ -9,9 +9,9 @@ public class CompressedController : BallController {
 	protected bool inAirLag;
 	protected float airLag = 0f;
 	protected float maxAirLag = 0.25f;
-	protected float maxLaunchAngle = 85f;
+	protected float maxLaunchAngle = 65f;
 	protected Vector2 releaseVector;
-	float maxAngularVelocity = 75f;
+	float maxAngularVelocity = 50f;
 	Vector2 lastDirection;
 
 	public override void Enter(Ball ball) {
@@ -63,9 +63,9 @@ public class CompressedController : BallController {
 	}
 
 	protected void LaunchBall(Ball ball, Vector2 launchDirection) {
-		float forceScaling = 350f;
+		float forceScaling = 6f;
 		Vector2 releaseForce = launchDirection * forceScaling;
-		ball.collisionManager.gameObject.GetComponent<Rigidbody2D>().AddForce(releaseForce);
+		ball.rb2d.AddForce(releaseForce, ForceMode2D.Impulse);
 	}
 
 	protected bool CheckAirbornTransition(Ball ball) {

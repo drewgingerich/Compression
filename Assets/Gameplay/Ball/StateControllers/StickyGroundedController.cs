@@ -5,7 +5,7 @@ using UnityEngine;
 public class StickyGroundedController : BallController {
 
 	float timeInState = 0f;
-	float maxStickyTime = 0.25f;
+	float maxStickyTime = 0.5f;
 
 	public override BallController CheckTransitions(Ball ball) {
 		if (CheckAirbornTransition(ball))

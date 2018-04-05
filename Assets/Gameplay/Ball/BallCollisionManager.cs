@@ -19,7 +19,6 @@ public class BallCollisionManager : MonoBehaviour {
 	void FixedUpdate () {
 		if (collisions.Count == 0)
 			impactVector = rb2d.velocity;
-		// Debug.Log(impactVector);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
@@ -29,7 +28,6 @@ public class BallCollisionManager : MonoBehaviour {
 		if (collisions.Count == 1) {
 			ball.state.ImpactMagnitude = impactVector.magnitude;
 			ball.state.ReboundDirection = GetReboundDirection(impactVector, contactNormal);
-			Debug.Log(ball.state.ReboundDirection);
 			ball.state.Grounded = true;
 		}
 	}
