@@ -24,8 +24,10 @@ public class GroundedController : BallController {
 
 	bool CheckCompressedTransition(Ball ball) {
 		Vector2 inputDirection = ball.playerInfo.inputScheme.GetInputDirection();
+		if (inputDirection == Vector2.zero)
+			return false;
 		Vector2 contactNormal = ball.state.ContactNormal;
-		return Vector2.Dot(inputDirection, contactNormal) < 0 ? true : false;
+		return Vector2.Dot(inputDirection, contactNormal) <= 0 ? true : false;
 	}
 }
 
