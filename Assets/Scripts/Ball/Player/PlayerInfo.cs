@@ -6,5 +6,9 @@ public class PlayerInfo {
 
 	public InputScheme inputScheme;
 	public int id;
-	public Color color;
+	public PlayerColor color;
+	
+	public void SetPlayerColor() {
+
+	}
 }
