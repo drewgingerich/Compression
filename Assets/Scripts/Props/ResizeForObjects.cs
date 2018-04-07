@@ -5,11 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class ResizeForObjects : MonoBehaviour {
 
+	[SerializeField] bool pixelPerfect;
+	[SerializeField] int pixPerUnit;
 	[SerializeField] float convergenceTime = 0.5f;
 	[SerializeField] float baseOrthographicSize = 6;
 	[SerializeField] float buffer = 2.5f;
 	[SerializeField] List<GameObject> objects;
 
+	float pixSize;
 	new Camera camera;
 
 	public void AddObject(GameObject gameObject) {
@@ -23,12 +26,16 @@ public class ResizeForObjects : MonoBehaviour {
 	void Awake() {
 		objects = new List<GameObject>();
 		camera = GetComponent<Camera>();
+		pixSize = 1f / pixPerUnit;
+		Debug.Log(Screen.width);
 	}
 
 	public void Update () {
 		float aspectRatio = (float)Screen.width / Screen.height;
 		float newOrthographicSize = FindOrthographicSize(objects, aspectRatio);
 		float smoothedSize = SmoothSizeChange(camera.orthographicSize, newOrthographicSize, convergenceTime);
+		if (pixelPerfect)
+			smoothedSize -= smoothedSize % pixSize;
 		camera.orthographicSize = smoothedSize;	
 	}
 

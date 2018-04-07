@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: b31b6ad029a7c4e6bb6caab7767d1492
-timeCreated: 1523050331
+timeCreated: 1523079059
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: basicTilesLarge_sheet_0
     21300002: basicTilesLarge_sheet_1
+    21300004: basicTilesLarge_sheet_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -130,6 +131,20 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: basicTilesLarge_sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1024
         y: 0
         width: 512
         height: 512
