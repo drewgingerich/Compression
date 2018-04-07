@@ -49,7 +49,7 @@ public class StickyCompressedController : BallController {
 		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
 		lastDirection = smoothedDirection;
 		float magnitude = FindMagnitude(smoothedDirection, ball.state.ReboundDirection);
-		releaseVector = -smoothedDirection * magnitude;
+		releaseVector = -smoothedDirection;
 		ball.aimBar.UpdatePosition(-releaseVector);
 	}
 
@@ -80,6 +80,7 @@ public class StickyCompressedController : BallController {
 		float angle = Vector2.Angle(ball.state.ReboundDirection, launchDirection);
 		float launchForce = 6;
 		Debug.Log(ball.state.ImpactMagnitude);
+		Debug.Log(launchDirection);
 		if (angle <= 30) {
 			float reboundBoost = 5f * 0.1f * ball.state.ImpactMagnitude;
 			launchForce += reboundBoost;

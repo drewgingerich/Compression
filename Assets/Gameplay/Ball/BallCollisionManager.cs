@@ -7,25 +7,27 @@ public class BallCollisionManager : MonoBehaviour {
 
 	Rigidbody2D rb2d;
 	Ball ball;
-	List<Collision2D> collisions { get; set; }
+	int maxContactPoints = 10;
 	Vector2 impactVector;
 
 	void Awake() {
-		collisions = new List<Collision2D>();
 		ball = GetComponent<Ball>();
 		rb2d = GetComponent<Rigidbody2D>();
 	}
 
 	void FixedUpdate () {
-		if (collisions.Count == 0)
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
+		if (numberOfContacts == 0)
 			impactVector = rb2d.velocity;
+		if (numberOfContacts > 0)
+			ball.state.ContactNormal = GetContactNormal();
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
-		collisions.Add(collision2D);
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
 		Vector2 contactNormal = GetContactNormal();
 		ball.state.ContactNormal = contactNormal;
-		if (collisions.Count == 1) {
+		if (!ball.state.Grounded) {
 			ball.state.ImpactMagnitude = impactVector.magnitude;
 			ball.state.ReboundDirection = GetReboundDirection(impactVector, contactNormal);
 			ball.state.Grounded = true;
@@ -33,26 +35,19 @@ public class BallCollisionManager : MonoBehaviour {
 	}
 
 	void OnCollisionExit2D(Collision2D collision2D) {
-		int i = 0;
-		while (true) {
-			if (collisions[i].collider == collision2D.collider)
-				collisions.RemoveAt(i);
-			else
-				i++;
-			if (i >= collisions.Count)
-				break;
-		}
-		ball.state.ContactNormal = GetContactNormal();
-		if (collisions.Count == 0) {
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
+		if (numberOfContacts == 0) {
 			ball.state.Grounded = false;
 			impactVector = Vector2.zero;
 		}
 	}
 
 	Vector2 GetContactNormal() {
+		ContactPoint2D[] contactPoints = new ContactPoint2D[maxContactPoints];
+		rb2d.GetContacts(contactPoints);
 		Vector2 sumNormal = Vector2.zero;
-		foreach (Collision2D collision in collisions)
-			sumNormal += collision.contacts[0].normal;
+		foreach (ContactPoint2D contact in contactPoints)
+			sumNormal += contact.normal;
 		return sumNormal.normalized;
 	}
 
