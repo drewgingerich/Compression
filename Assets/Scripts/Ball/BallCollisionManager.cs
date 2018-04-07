@@ -21,6 +21,7 @@ public class BallCollisionManager : MonoBehaviour {
 			impactVector = rb2d.velocity;
 		if (numberOfContacts > 0)
 			ball.state.ContactNormal = GetContactNormal();
+		Debug.Log(ball.state.ContactNormal);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {

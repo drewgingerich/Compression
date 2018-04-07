@@ -79,8 +79,6 @@ public class StickyCompressedController : BallController {
 	protected void LaunchBall(Ball ball, Vector2 launchDirection) {
 		float angle = Vector2.Angle(ball.state.ReboundDirection, launchDirection);
 		float launchForce = 6;
-		Debug.Log(ball.state.ImpactMagnitude);
-		Debug.Log(launchDirection);
 		if (angle <= 30) {
 			float reboundBoost = 5f * 0.1f * ball.state.ImpactMagnitude;
 			launchForce += reboundBoost;
