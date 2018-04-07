@@ -16,16 +16,17 @@ public class BallCollisionManager : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[maxContactPoints]);
 		if (numberOfContacts == 0)
 			impactVector = rb2d.velocity;
-		if (numberOfContacts > 0)
+		if (numberOfContacts > 0) {
 			ball.state.ContactNormal = GetContactNormal();
+		}
 		Debug.Log(ball.state.ContactNormal);
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
-		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[maxContactPoints]);
 		Vector2 contactNormal = GetContactNormal();
 		ball.state.ContactNormal = contactNormal;
 		if (!ball.state.Grounded) {
@@ -36,7 +37,7 @@ public class BallCollisionManager : MonoBehaviour {
 	}
 
 	void OnCollisionExit2D(Collision2D collision2D) {
-		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[0]);
+		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[maxContactPoints]);
 		if (numberOfContacts == 0) {
 			ball.state.Grounded = false;
 			impactVector = Vector2.zero;
