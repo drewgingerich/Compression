@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
 public class EventValue<T> {
 
 	public event System.Action<T> OnChange;
@@ -26,3 +25,18 @@ public class EventValue<T> {
 		_value = initialValue;
 	}
 }
+
+[System.Serializable]
+public class BoolEventValue : EventValue<bool> { }
+
+[System.Serializable]
+public class IntEventValue : EventValue<int> { }
+
+[System.Serializable]
+public class FloatEventValue : EventValue<float> { }
+
+[System.Serializable]
+public class PlayerColorSchemeEventValue : EventValue<PlayerColorScheme> { }
+
+[System.Serializable]
+public class InputSchemeEventValue : EventValue<InputScheme> { }

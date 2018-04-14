@@ -10,10 +10,10 @@ public class InputSchemeMonitor : MonoBehaviour {
 	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
 
 	void Update () {
-		if (playerRoster.FreeSlots() > 0)
+		if (playerRoster.FreeSlots() == 0)
 			return;
 		var inputSchemes = availableInputSchemes.items;
-		for (int i = inputSchemes.Count; i > 0; i--) {
+		for (int i = inputSchemes.Count - 1; i >= 0; i--) {
 			InputScheme inputScheme = inputSchemes[i];
 			if (inputScheme.GetInputDirection() == Vector2.zero)
 				continue;
