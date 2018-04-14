@@ -4,51 +4,38 @@ using UnityEngine;
 
 public class FollowObjects : MonoBehaviour {
 
-	[SerializeField] float speed = 1;
-	[SerializeField] GameObject fallbackObject;
-	[SerializeField] List<GameObject> objectsToFollow;
+	[SerializeField] TransformRuntimeSet objectTransformSet;
+	[SerializeField] Transform fallbackTransform;
+	[SerializeField] Vector2 fallbackPosition;
+	[SerializeField] float convergenceTime = 0.5f;
 
-	public void AddObject(GameObject gameObject) {
-		objectsToFollow.Add(gameObject);
-	}
-
-	public void RemoveObject(GameObject gameObject) {
-		objectsToFollow.Remove(gameObject);
-	}
-
-	void Awake() {
-		objectsToFollow = new List<GameObject>();
-	}
-	
 	void Update() {
-		Vector3 centerPosition = FindCenterPosition();
-		Vector3 smoothedPosition = SmoothMovement(transform.position, centerPosition, speed);
+		Vector3 centerPosition = FindCenterPosition(objectTransformSet.items);
+		Vector3 smoothedPosition = SmoothMovement(transform.position, centerPosition, convergenceTime);
 		transform.position = smoothedPosition;
 	}
 
-	Vector3 FindCenterPosition() {
-		Vector3 centerPosition = Vector3.zero;
-		foreach (GameObject objectToFollow in objectsToFollow) {
-			if (objectToFollow != null)
-				centerPosition += objectToFollow.transform.position;
-		}
-		if (centerPosition == Vector3.zero) {
-			Vector3 fallbackPosition = fallbackObject.transform.position;
-			float currentDepth = transform.position.z;
-			return new Vector3(fallbackPosition.x, fallbackPosition.y, currentDepth);
+	Vector3 FindCenterPosition(List<Transform> objectTransforms) {
+		Vector3 centerPosition;
+		if (objectTransforms.Count == 0) {
+			if (fallbackTransform != null)
+				centerPosition = fallbackTransform.position;
+			else
+				centerPosition = new Vector3(fallbackPosition.x, fallbackPosition.y, 0);
 		} else {
-			centerPosition *= 1f / objectsToFollow.Count;
-			centerPosition.z = transform.position.z;
-			return centerPosition;
+			centerPosition = Vector3.zero;
+			foreach (Transform objTransform in objectTransforms) {
+				centerPosition += objTransform.position;
+			}
+			centerPosition *= 1f / objectTransforms.Count;
 		}
+		centerPosition.z = transform.position.z;
+		return centerPosition;
 	}
 
-	Vector3 SmoothMovement(Vector3 position, Vector3 targetPosition, float maxMovementSpeed) {
-		float maxMovement = maxMovementSpeed * Time.deltaTime;
-		Vector3 movementVector = targetPosition - position;
-		float movement = movementVector.magnitude;
-		if (movement > maxMovement)
-			targetPosition = transform.position + movementVector * maxMovement;
-		return targetPosition;
+	Vector3 SmoothMovement(Vector3 position, Vector3 targetPosition, float convergenceTime) {
+		Vector3 change = targetPosition - position;
+		Vector3 velocity = change / convergenceTime;
+		return position + velocity * Time.deltaTime;
 	}
 }

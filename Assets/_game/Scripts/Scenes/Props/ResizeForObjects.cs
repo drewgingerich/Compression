@@ -5,41 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class ResizeForObjects : MonoBehaviour {
 
-	[SerializeField] bool pixelPerfect;
-	[SerializeField] int pixPerUnit;
+	[SerializeField] TransformRuntimeSet objectTransformSet;
 	[SerializeField] float convergenceTime = 0.5f;
 	[SerializeField] float baseOrthographicSize = 6;
 	[SerializeField] float buffer = 2.5f;
-	[SerializeField] List<GameObject> objects;
 
-	float pixSize;
 	new Camera camera;
 
-	public void AddObject(GameObject gameObject) {
-		objects.Add(gameObject);
-	}
-
-	public void RemoveObject(GameObject gameObject) {
-		objects.Remove(gameObject);
-	}
-
 	void Awake() {
-		objects = new List<GameObject>();
 		camera = GetComponent<Camera>();
-		pixSize = 1f / pixPerUnit;
 	}
 
 	public void Update () {
 		float aspectRatio = (float)Screen.width / Screen.height;
-		float newOrthographicSize = FindOrthographicSize(objects, aspectRatio);
+		float newOrthographicSize = FindOrthographicSize(objectTransformSet.items, aspectRatio);
 		float smoothedSize = SmoothSizeChange(camera.orthographicSize, newOrthographicSize, convergenceTime);
-		if (pixelPerfect)
-			smoothedSize -= smoothedSize % pixSize;
 		camera.orthographicSize = smoothedSize;	
 	}
 
-	float FindOrthographicSize(List<GameObject> objects, float aspectRatio) {
-		Vector2 cornerVector = FindCornerVector(transform.position, objects);
+	float FindOrthographicSize(List<Transform> objectTransforms, float aspectRatio) {
+		Vector2 cornerVector = FindCornerVector(transform.position, objectTransforms);
 		cornerVector.x = cornerVector.x / aspectRatio;
 		cornerVector += new Vector2(buffer, buffer);
 		float verticalSize = Mathf.Max(cornerVector.y, baseOrthographicSize);
@@ -47,13 +32,13 @@ public class ResizeForObjects : MonoBehaviour {
 		return Mathf.Max(verticalSize, horizontalSize);
 	}
 
-	Vector2 FindCornerVector(Vector3 position, List<GameObject> objects) {
+	Vector2 FindCornerVector(Vector3 position, List<Transform> objectTransforms) {
 		Vector2 cornerVector = Vector2.zero;
-		foreach (GameObject obj in objects) {
-			float verticalDistance = Mathf.Abs(position.y - obj.transform.position.y);
+		foreach (Transform objTransform in objectTransforms) {
+			float verticalDistance = Mathf.Abs(position.y - objTransform.position.y);
 			if (verticalDistance > cornerVector.y)
 				cornerVector.y = verticalDistance;
-			float horizontalDistance = Mathf.Abs(position.x - obj.transform.position.x);
+			float horizontalDistance = Mathf.Abs(position.x - objTransform.position.x);
 			if (horizontalDistance > cornerVector.x)
 				cornerVector.x = horizontalDistance;
 		}

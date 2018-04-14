@@ -1,15 +1,17 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.Events;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
-// public class ExitZone : MonoBehaviour {
+public class ExitZone : MonoBehaviour {
 
-// 	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
+	public UnityEvent OnAllPlayersLeft;
 
-// 	void OnTriggerEnter2D(Collider2D other) {
-// 		OnBallDestroyed.Invoke(other.gameObject);
-// 		OnPlayerLeave.Invoke(other.GetComponent<Ball>().playerInfo);
-// 		Destroy(other.gameObject);
-// 	}
-// }
+	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
+
+	void OnTriggerEnter2D(Collider2D other) {
+		Destroy(other.gameObject);
+		if (playerRoster.items.Count == 0)
+			OnAllPlayersLeft.Invoke();
+	}
+}

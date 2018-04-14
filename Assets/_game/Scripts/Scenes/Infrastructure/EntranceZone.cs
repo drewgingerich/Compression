@@ -1,37 +1,38 @@
-﻿// using System.Collections;
-// using System.Collections.Generic;
-// using System.Linq;
-// using UnityEngine;
-// using UnityEngine.Events;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
 
-// public class EntranceZone : MonoBehaviour {
+public class EntranceZone : MonoBehaviour {
 
-// 	public UnityEvent OnAllPlayersReady;
+	public UnityEvent OnAllPlayersReady;
 
-// 	List<GameObject> playersReady;
+	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
 
-// 	void Awake() {
-// 		playersReady = new List<GameObject>();
-// 	}
+	List<GameObject> playersReady;
 
-// 	void OnTriggerEnter2D(Collider2D other) {
-// 		if (other.GetComponent<Ball>() != null) {
-// 			playersReady.Add(other.gameObject);
-// 			CheckIfAllPlayersAreReady();
-// 		}
-// 	}
+	void Awake() {
+		playersReady = new List<GameObject>();
+	}
 
-// 	void OnTriggerExit2D(Collider2D other) {
-// 		if (other.GetComponent<Ball>() != null)
-// 			playersReady.Remove(other.gameObject);
-// 	}
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.GetComponent<Ball>() != null) {
+			playersReady.Add(other.gameObject);
+			CheckIfAllPlayersAreReady();
+		}
+	}
 
-// 	void CheckIfAllPlayersAreReady() {
-// 		int numberOfPlayers = PlayerManager.GetNumberOfPlayers();
-// 		if (numberOfPlayers < 2)
-// 			return;
-// 		if (playersReady.Count != numberOfPlayers)
-// 			return;
-// 		OnAllPlayersReady.Invoke();
-// 	}
-// }
+	void OnTriggerExit2D(Collider2D other) {
+		if (other.GetComponent<Ball>() != null)
+			playersReady.Remove(other.gameObject);
+	}
+
+	void CheckIfAllPlayersAreReady() {
+		if (playerRoster.items.Count < 2)
+			return;
+		if (playersReady.Count != playerRoster.items.Count)
+			return;
+		OnAllPlayersReady.Invoke();
+	}
+}
