@@ -20,17 +20,24 @@ public class InputSchemeMonitor : MonoBehaviour {
 			PlayerInfo newPlayerInfo = Instantiate(defaultPlayerInfo);
 			newPlayerInfo.inputScheme.Value = inputScheme;
 			playerRoster.RegisterItem(newPlayerInfo);
+			availableInputSchemes.UnregisterItem(inputScheme);
 		}
 	}
 
 	void OnEnable() {
 		playerRoster.OnVacancy += StartMonitor;
 		playerRoster.OnNoVacancy += StopMonitor;
+		playerRoster.OnUnregisterItem += MonitorInputScheme;
 	}
 
 	void OnDisable() {
 		playerRoster.OnVacancy -= StartMonitor;
 		playerRoster.OnNoVacancy -= StopMonitor;
+	}
+	
+	void MonitorInputScheme(PlayerInfo playerInfo) {
+		if (!availableInputSchemes.items.Contains(playerInfo.inputScheme.Value))
+			availableInputSchemes.RegisterItem(playerInfo.inputScheme.Value);
 	}
 
 	void StopMonitor() {
