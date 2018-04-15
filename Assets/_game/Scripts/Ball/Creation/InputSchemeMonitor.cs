@@ -8,19 +8,22 @@ public class InputSchemeMonitor : MonoBehaviour {
 	[SerializeField] InputSchemeRuntimeSet availableInputSchemes;
 	[SerializeField] PlayerInfo defaultPlayerInfo;
 	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
+	
+	bool active = true;
 
 	void Update () {
-		if (playerRoster.FreeSlots() == 0)
+		if (!active || playerRoster.FreeSlots() == 0)
 			return;
-		var inputSchemes = availableInputSchemes.items;
-		for (int i = inputSchemes.Count - 1; i >= 0; i--) {
-			InputScheme inputScheme = inputSchemes[i];
+		for (int i = availableInputSchemes.items.Count - 1; i >= 0; i--) {
+			InputScheme inputScheme = availableInputSchemes.items[i];
 			if (inputScheme.GetInputDirection() == Vector2.zero)
 				continue;
 			PlayerInfo newPlayerInfo = Instantiate(defaultPlayerInfo);
 			newPlayerInfo.inputScheme.Value = inputScheme;
 			playerRoster.RegisterItem(newPlayerInfo);
 			availableInputSchemes.UnregisterItem(inputScheme);
+			if (!active)
+				return;
 		}
 	}
 
@@ -42,9 +45,11 @@ public class InputSchemeMonitor : MonoBehaviour {
 
 	void StopMonitor() {
 		gameObject.SetActive(false);
+		active = false;
 	}
 
 	void StartMonitor() {
 		gameObject.SetActive(true);
+		active = true;
 	}
 }
