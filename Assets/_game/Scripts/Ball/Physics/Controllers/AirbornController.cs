@@ -14,7 +14,7 @@ public class AirbornController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		state.currentGravity.Value = state.baseGravity.Value;
+		state.gravityRatio.Value = 1f;
 		timeInState = 0f;
 	}
 

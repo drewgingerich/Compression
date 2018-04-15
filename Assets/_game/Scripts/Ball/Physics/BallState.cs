@@ -9,8 +9,8 @@ public class BallState {
 	public EventValue<InputType> inputType = new EventValue<InputType>();
 	public EventValue<Vector2> inputDirection = new EventValue<Vector2>();
 	public EventValue<bool> grounded = new EventValue<bool>();
-	public EventValue<float> baseGravity = new EventValue<float>();
-	public EventValue<float> currentGravity = new EventValue<float>();
+	public EventValue<float> baseGravity = new EventValue<float>(1f);
+	public EventValue<float> gravityRatio = new EventValue<float>(1f);
 	public EventValue<Vector2> contactNormal = new EventValue<Vector2>();
 	public EventValue<ImpactInfo> impactInfo = new EventValue<ImpactInfo>();
 }

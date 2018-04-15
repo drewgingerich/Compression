@@ -16,9 +16,9 @@ public class ReboundController : BallController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		timeCompressed = 0f;
-		state.currentGravity.Value = 0f;
+		state.gravityRatio.Value = 0f;
 		lastDirection = state.inputDirection.Value;
-		lastDirection = ClampDirection(lastDirection, state.contactNormal.Value, maxLaunchAngle);
+		lastDirection = ClampDirection(lastDirection, -state.contactNormal.Value, maxLaunchAngle);
 		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
 
@@ -39,11 +39,10 @@ public class ReboundController : BallController {
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		timeCompressed += Time.deltaTime;
 		Vector2 inputDirection = state.inputDirection.Value;
-		Vector2 clampedDirection = ClampDirection(inputDirection, state.contactNormal.Value, maxLaunchAngle);
+		Vector2 clampedDirection = ClampDirection(inputDirection, -state.contactNormal.Value, maxLaunchAngle);
 		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
 		lastDirection = smoothedDirection;
 		releaseVector = -smoothedDirection;
-		// ball.aimBar.UpdatePosition(-releaseVector);
 	}
 
 	protected Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
@@ -55,15 +54,15 @@ public class ReboundController : BallController {
 		return rotation * referenceDirection;
 	}
 
-	protected Vector2 FindStartingInputDirection(BallState state, Rigidbody2D rb2d) {
-		Vector2 contactNormalReference = state.contactNormal.Value;
-		Vector2 reboundDirectionReference = state.impactInfo.Value.reboundDirection;
-		Vector2 inputDirection = state.inputDirection.Value;
-		inputDirection = ClampDirection(inputDirection, contactNormalReference, 45f);
-		if (Vector2.Angle(reboundDirectionReference, inputDirection) < 15f)
-			inputDirection = reboundDirectionReference;
-		return inputDirection;
-	}
+	// protected Vector2 FindStartingInputDirection(BallState state, Rigidbody2D rb2d) {
+	// 	Vector2 contactNormalReference = state.contactNormal.Value;
+	// 	Vector2 reboundDirectionReference = state.impactInfo.Value.reboundDirection;
+	// 	Vector2 inputDirection = state.inputDirection.Value;
+	// 	inputDirection = ClampDirection(inputDirection, contactNormalReference, 45f);
+	// 	if (Vector2.Angle(reboundDirectionReference, inputDirection) < 15f)
+	// 		inputDirection = reboundDirectionReference;
+	// 	return inputDirection;
+	// }
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
 		float angle = Vector2.Angle(state.impactInfo.Value.reboundDirection, launchDirection);

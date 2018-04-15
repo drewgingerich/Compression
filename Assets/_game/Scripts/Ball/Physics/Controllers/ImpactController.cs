@@ -19,7 +19,7 @@ public class ImpactController : BallController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		timeInState = 0f;
-		state.currentGravity.Value = 0f;
+		state.gravityRatio.Value = 0f;
 		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
 	

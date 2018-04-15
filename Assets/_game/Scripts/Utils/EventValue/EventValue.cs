@@ -42,7 +42,4 @@ public class PlayerColorSchemeEventValue : EventValue<PlayerColorScheme> { }
 public class InputSchemeEventValue : EventValue<InputScheme> { }
 
 [Serializable]
-public class BallGravityInfoEventValue : EventValue<BallGravityInfo> { }
-
-[Serializable]
 public class ImpactInfoEventValue : EventValue<ImpactInfo> { }

@@ -13,7 +13,7 @@ public class GroundedController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		state.currentGravity.Value = 1f;
+		state.gravityRatio.Value = 1f;
 	}
 
 	bool CheckAirbornTransition(BallState state) {
