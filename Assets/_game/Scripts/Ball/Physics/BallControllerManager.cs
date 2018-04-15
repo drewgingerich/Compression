@@ -11,6 +11,7 @@ public class BallControllerManager : MonoBehaviour {
 
 	void Awake() {
 		controller = new AirbornController();
+		controller.Enter(ball.state, rb2d);
 	}
 
 	void FixedUpdate() {
