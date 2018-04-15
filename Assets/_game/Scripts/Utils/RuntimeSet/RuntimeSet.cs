@@ -16,12 +16,12 @@ public class RuntimeSet<T> : ScriptableObject {
 	}
 
 	public virtual void UnregisterItem(T item) {
-		items.Add(item);
+		items.Remove(item);
 		OnUnregisterItem(item);
 	}
 
 	void OnEnable() {
-		items = initialItems;
+		items = new List<T>(initialItems);
 		hideFlags = HideFlags.DontUnloadUnusedAsset;
 	}
 
