@@ -10,11 +10,11 @@ public class CompressedController : BallController {
 	protected float airLag = 0f;
 	protected float maxAirLag = 0.25f;
 	protected float maxLaunchAngle = 65f;
-	protected Vector2 compressionVector;
+	protected Vector2 compressionDirection;
 	float maxAngularVelocity = 50f;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		compressionVector = ClampDirection(state.inputDirection.Value, state.contactNormal.Value, maxLaunchAngle);
+		compressionDirection = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -25,7 +25,7 @@ public class CompressedController : BallController {
 		if (CheckAirbornTransition(ball))
 			return new AirbornController();
 		if (CheckLaunchTransition(ball)) {
-			LaunchBall(rb2d, compressionVector);
+			LaunchBall(rb2d, -compressionDirection);
 			return new AirbornController();
 		}
 		return null;
@@ -33,7 +33,7 @@ public class CompressedController : BallController {
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		Vector2 clampedDirection = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
-		compressionVector = ClampDirection(clampedDirection, compressionVector, maxAngularVelocity * Time.deltaTime);
+		compressionDirection = ClampDirection(clampedDirection, compressionDirection, maxAngularVelocity * Time.deltaTime);
 	}
 
 	protected Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
