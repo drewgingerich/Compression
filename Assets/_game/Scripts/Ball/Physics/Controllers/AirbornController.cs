@@ -8,7 +8,7 @@ public class AirbornController : BallController {
 	float lag = 0.2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
-		if (CheckStickyGroundedTransition(state))
+		if (CheckImpactTransition(state))
 			return new ImpactController();
 		return null;
 	}
@@ -18,7 +18,7 @@ public class AirbornController : BallController {
 		timeInState = 0f;
 	}
 
-	bool CheckStickyGroundedTransition(BallState state) {
+	bool CheckImpactTransition(BallState state) {
 		timeInState += Time.deltaTime;
 		return state.grounded.Value && timeInState >= lag;
 	}

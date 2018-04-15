@@ -15,21 +15,15 @@ public class ReboundController : BallController {
 	Vector2 lastDirection;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		// Debug.Log("StickyCompressed State");
 		timeCompressed = 0f;
-		// ball.aimBar.Show();
-		// ball.animator.SetBool("Squished", true);
 		state.currentGravity.Value = 0f;
 		lastDirection = state.inputDirection.Value;
 		lastDirection = ClampDirection(lastDirection, state.contactNormal.Value, maxLaunchAngle);
 		rb2d.velocity = rb2d.velocity * 0.5f;
-		// ball.spriteRenderer.color = Color.red;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
 		state.impactInfo.Value.magnitude = 0f;
-		// ball.aimBar.Hide();
-		// ball.animator.SetBool("Squished", false);
 	}
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {

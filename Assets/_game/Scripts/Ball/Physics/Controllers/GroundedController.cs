@@ -13,9 +13,7 @@ public class GroundedController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		// Debug.Log("Grounded State");
 		state.currentGravity.Value = 1f;
-		// spriteRenderer.color = Color.black;
 	}
 
 	bool CheckAirbornTransition(BallState state) {
