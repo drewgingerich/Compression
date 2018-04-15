@@ -26,17 +26,23 @@ public class EventValue<T> {
 	}
 }
 
-[System.Serializable]
+[Serializable]
 public class BoolEventValue : EventValue<bool> { }
 
-[System.Serializable]
+[Serializable]
 public class IntEventValue : EventValue<int> { }
 
-[System.Serializable]
+[Serializable]
 public class FloatEventValue : EventValue<float> { }
 
-[System.Serializable]
+[Serializable]
 public class PlayerColorSchemeEventValue : EventValue<PlayerColorScheme> { }
 
-[System.Serializable]
+[Serializable]
 public class InputSchemeEventValue : EventValue<InputScheme> { }
+
+[Serializable]
+public class BallGravityInfoEventValue : EventValue<BallGravityInfo> { }
+
+[Serializable]
+public class ImpactInfoEventValue : EventValue<ImpactInfo> { }
