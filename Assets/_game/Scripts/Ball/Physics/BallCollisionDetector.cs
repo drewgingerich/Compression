@@ -30,6 +30,7 @@ public class BallCollisionDetector : MonoBehaviour {
 		ball.state.contactNormal.Value = normal;
 		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[1]);
 		if (numberOfContacts == 1) {
+			ball.state.grounded.Value = true;
 			ImpactInfo impactInfo = new ImpactInfo();
 			impactInfo.magnitude = impactVector.magnitude;
 			impactInfo.reboundDirection = GetReboundDirection(impactVector, normal);
