@@ -13,7 +13,6 @@ public class BallGravityUpdater : MonoBehaviour {
 
 	void OnChangeGravityRatio(float gravityRatio) {
 		rb2d.gravityScale = ball.state.baseGravity.Value * gravityRatio;
-		Debug.Log(gravityRatio);
 	}
 
 	void OnEnable() {
