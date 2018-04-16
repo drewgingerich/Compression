@@ -7,8 +7,8 @@ public class RuntimeSet<T> : ScriptableObject {
 	public event System.Action<T> OnRegisterItem = delegate { };
 	public event System.Action<T> OnUnregisterItem = delegate { };
 
-	[HideInInspector] public List<T> items;
-	[SerializeField] List<T> initialItems;
+	public List<T> items = new List<T>();
+	[SerializeField] List<T> initialItems = new List<T>();
 
 	public virtual void RegisterItem(T item) {
 		items.Add(item);

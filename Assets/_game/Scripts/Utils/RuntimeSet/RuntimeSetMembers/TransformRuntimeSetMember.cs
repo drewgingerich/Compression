@@ -1,5 +1,3 @@
 ﻿using UnityEngine;
 
-public class TransformRuntimeSetMember: RuntimeSetMember<Transform> {
-	[SerializeField] new TransformRuntimeSet set;
-}
+public class TransformRuntimeSetMember: RuntimeSetMember<Transform, TransformRuntimeSet> { }

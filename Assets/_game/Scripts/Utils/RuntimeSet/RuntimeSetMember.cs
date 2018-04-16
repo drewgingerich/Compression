@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuntimeSetMember<T> : MonoBehaviour {
+public class RuntimeSetMember<T1, T2> : MonoBehaviour where T2 : RuntimeSet<T1> {
 
-	[SerializeField] protected T item;
-	[SerializeField] protected RuntimeSet<T> set;
+	[SerializeField] protected T1 item;
+	[SerializeField] protected T2 runtimeSet;
 
 	void OnEnable() {
-		set.RegisterItem(item);
+		runtimeSet.RegisterItem(item);
 	}
 
 	void OnDisable() {
-		set.UnregisterItem(item);
+		runtimeSet.UnregisterItem(item);
 	}
 }
