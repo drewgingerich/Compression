@@ -7,7 +7,7 @@ public class AimBarColor : MonoBehaviour {
 	[SerializeField] Ball ball;
 	[SerializeField] LineRenderer lineSprite;
 
-	void Awake() {
+	void Start() {
 		ball.playerInfo.colorScheme.OnChange += ChangeColor;
 	}
 

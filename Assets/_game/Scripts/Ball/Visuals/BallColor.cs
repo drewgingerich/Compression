@@ -7,7 +7,7 @@ public class BallColor : MonoBehaviour {
 	[SerializeField] Ball ball;
 	[SerializeField] SpriteRenderer ballSprite;
 
-	void Awake() {
+	void Start() {
 		ball.playerInfo.colorScheme.OnChange += ChangeColor;
 	}
 
