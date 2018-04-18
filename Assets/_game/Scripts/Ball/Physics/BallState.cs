@@ -13,7 +13,7 @@ public class BallState {
 	public EventValue<float> gravityRatio = new EventValue<float>(1f);
 	public EventValue<Vector2> contactNormal = new EventValue<Vector2>();
 	public EventValue<Vector2> reboundVector = new EventValue<Vector2>();
-	public EventValue<Vector2> compressionVector = new EventValue<Vector2>();
+	public EventValue<Vector2> compressionDirection = new EventValue<Vector2>();
 	public EventValue<float> impactMagnitude = new EventValue<float>();
 	public EventValue<ImpactInfo> impactInfo = new EventValue<ImpactInfo>();
 }

@@ -11,7 +11,7 @@ public class AimBar : MonoBehaviour {
 	float lineEndX = 0.6f;
 
 	void Awake() {
-		ball.state.compressionVector.OnChange += UpdateAimBar;
+		ball.state.compressionDirection.OnChange += UpdateAimBar;
 	}
 
 	void Start() {
