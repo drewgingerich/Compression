@@ -10,13 +10,10 @@ public class ReboundController : BallController {
 	float maxAirLag = 0.25f;
 	float maxLaunchAngle = 65f;
 	float maxAngularVelocity = 50f;
-	Vector2 lastDirection;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.gravityRatio.Value = 0f;
-		lastDirection = state.inputDirection.Value;
-		lastDirection = ClampDirection(lastDirection, -state.contactNormal.Value, maxLaunchAngle);
-		rb2d.velocity = rb2d.velocity * 0.5f;
+		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -36,8 +33,7 @@ public class ReboundController : BallController {
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		Vector2 inputDirection = state.inputDirection.Value;
 		Vector2 clampedDirection = ClampDirection(inputDirection, -state.contactNormal.Value, maxLaunchAngle);
-		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
-		lastDirection = smoothedDirection;
+		Vector2 smoothedDirection = ClampDirection(clampedDirection, state.compressionDirection.Value, maxAngularVelocity * Time.deltaTime);
 		state.compressionDirection.Value = smoothedDirection;
 	}
 
