@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class ReboundController : BallController {
 
-	protected float timeCompressed;
 	protected float maxTimeCompressed = 0.5f;
 	protected bool inAirLag;
 	protected float airLag = 0f;
 	protected float maxAirLag = 0.25f;
 	protected float maxLaunchAngle = 65f;
-	protected Vector2 releaseVector;
 	float maxAngularVelocity = 50f;
 	Vector2 lastDirection;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		timeCompressed = 0f;
 		state.gravityRatio.Value = 0f;
 		lastDirection = state.inputDirection.Value;
 		lastDirection = ClampDirection(lastDirection, -state.contactNormal.Value, maxLaunchAngle);
@@ -30,22 +27,21 @@ public class ReboundController : BallController {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
 		if (CheckLaunchTransition(state) || CheckTimeoutTransition(state)) {
-			LaunchBall(state, rb2d, releaseVector);
+			LaunchBall(state, rb2d, state.compressionDirection.Value);
 			return new AirbornController();
 		}
 		return null;
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		timeCompressed += Time.deltaTime;
 		Vector2 inputDirection = state.inputDirection.Value;
 		Vector2 clampedDirection = ClampDirection(inputDirection, -state.contactNormal.Value, maxLaunchAngle);
 		Vector2 smoothedDirection = ClampDirection(clampedDirection, lastDirection, maxAngularVelocity * Time.deltaTime);
 		lastDirection = smoothedDirection;
-		releaseVector = -smoothedDirection;
+		state.compressionDirection.Value = smoothedDirection;
 	}
 
-	protected Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
+	Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
 		float angle = Vector2.SignedAngle(referenceDirection, direction);
 		if (Mathf.Abs(angle) <= maxAngle)
 			return direction;
@@ -54,17 +50,7 @@ public class ReboundController : BallController {
 		return rotation * referenceDirection;
 	}
 
-	// protected Vector2 FindStartingInputDirection(BallState state, Rigidbody2D rb2d) {
-	// 	Vector2 contactNormalReference = state.contactNormal.Value;
-	// 	Vector2 reboundDirectionReference = state.impactInfo.Value.reboundDirection;
-	// 	Vector2 inputDirection = state.inputDirection.Value;
-	// 	inputDirection = ClampDirection(inputDirection, contactNormalReference, 45f);
-	// 	if (Vector2.Angle(reboundDirectionReference, inputDirection) < 15f)
-	// 		inputDirection = reboundDirectionReference;
-	// 	return inputDirection;
-	// }
-
-	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
+	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
 		float angle = Vector2.Angle(state.impactInfo.Value.reboundDirection, launchDirection);
 		float launchForce = 6;
 		if (angle <= 30) {
@@ -78,22 +64,22 @@ public class ReboundController : BallController {
 		rb2d.AddForce(launchVector, ForceMode2D.Impulse);
 	}
 
-	protected bool CheckAirbornTransition(BallState state) {
+	bool CheckAirbornTransition(BallState state) {
 		if (state.grounded.Value && !inAirLag)
 			return false;
 		if (!inAirLag) {
 			inAirLag = true;
 			return false;
 		}
-		airLag += Time.deltaTime;
+		airLag += Time.fixedDeltaTime;
 		return airLag >= maxAirLag ? true : false;
 	}
 
-	protected bool CheckLaunchTransition(BallState state) {
+	bool CheckLaunchTransition(BallState state) {
 		return state.inputDirection.Value == Vector2.zero ? true : false;
 	}
 
-	protected bool CheckTimeoutTransition(BallState state) {
-		return timeCompressed >= maxTimeCompressed ? true : false;
+	bool CheckTimeoutTransition(BallState state) {
+		return state.timeInState.Value >= maxTimeCompressed ? true : false;
 	}
 }

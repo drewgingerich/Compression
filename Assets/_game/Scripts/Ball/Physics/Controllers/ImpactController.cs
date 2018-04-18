@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ImpactController : BallController {
 
-	float timeInState = 0f;
 	float maxStickyTime = 0.5f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
@@ -18,7 +17,6 @@ public class ImpactController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		timeInState = 0f;
 		state.gravityRatio.Value = 0f;
 		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
@@ -34,8 +32,7 @@ public class ImpactController : BallController {
 	}
 
 	bool CheckGroundedTransition(BallState state) {
-		timeInState += Time.deltaTime;
-		return timeInState >= maxStickyTime ? true : false;
+		return state.timeInState.Value >= maxStickyTime ? true : false;
 	}
 }
 
