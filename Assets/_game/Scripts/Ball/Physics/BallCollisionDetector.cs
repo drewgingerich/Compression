@@ -32,7 +32,7 @@ public class BallCollisionDetector : MonoBehaviour {
 		if (numberOfContacts == 1) {
 			ball.state.grounded.Value = true;
 			ball.state.impactMagnitude.Value = impactVector.magnitude;
-			ball.state.reboundVector.Value = GetReboundDirection(impactVector, normal);
+			ball.state.reboundDirection.Value = GetReboundDirection(impactVector, normal);
 		}
 	}
 

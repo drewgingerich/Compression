@@ -20,7 +20,7 @@ public class ReboundController : BallController {
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
-		state.impactInfo.Value.magnitude = 0f;
+		state.impactMagnitude.Value = 0f;
 	}
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
@@ -51,13 +51,13 @@ public class ReboundController : BallController {
 	}
 
 	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
-		float angle = Vector2.Angle(state.impactInfo.Value.reboundDirection, launchDirection);
+		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
 		float launchForce = 6;
 		if (angle <= 30) {
-			float reboundBoost = 5f * 0.1f * state.impactInfo.Value.magnitude;
+			float reboundBoost = 5f * 0.1f * state.impactMagnitude.Value;
 			launchForce += reboundBoost;
 		} else {
-			float reboundBoost = 5f * 0.07f * state.impactInfo.Value.magnitude;
+			float reboundBoost = 5f * 0.07f * state.impactMagnitude.Value;
 			launchForce += reboundBoost;
 		}
 		Vector2 launchVector = launchDirection * launchForce;
