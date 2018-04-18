@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
-public class AimBarUI : MonoBehaviour {
+public class AimBar : MonoBehaviour {
 
-	LineRenderer lineRenderer;
+	[SerializeField] Ball ball;
+	[SerializeField] LineRenderer lineRenderer;
 	float lineStartX = 0.15f;
 	float lineEndX = 0.6f;
 
 	void Awake() {
-		lineRenderer = GetComponent<LineRenderer>();
+		ball.state.compressionVector.OnChange += UpdateAimBar;
 	}
 
 	void Start() {
@@ -25,15 +26,11 @@ public class AimBarUI : MonoBehaviour {
 		lineRenderer.enabled = false;
 	}
 
-	public void UpdatePosition(Vector2 compressionVector) {
+	public void UpdateAimBar(Vector2 compressionVector) {
 		float scale = Mathf.Pow(compressionVector.magnitude, 2);
 		Vector2 normalized = compressionVector.normalized;
 		Vector3 direction3D	= new Vector3(normalized.x, normalized.y, 0);
 		lineRenderer.SetPosition(0, direction3D * lineStartX);
 		lineRenderer.SetPosition(1, direction3D * lineEndX * scale);
-		// lineObject.transform.localScale = new Vector3 (20, scale * 4, 1);
-		// Color tempColor = lineRenderer.startColor;
-		// tempColor.a = scale;
-		// lineRenderer.startColor = tempColor;
 	}
 }
