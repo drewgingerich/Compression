@@ -21,6 +21,7 @@ public class BallControllerManager : MonoBehaviour {
 			checkForTransition = CheckForNewState();
 		}
 		controller.Update(ball.state, rb2d);
+		ball.state.timeInState.Value += Time.fixedDeltaTime;
 	}
 
 	bool CheckForNewState() {
@@ -28,6 +29,7 @@ public class BallControllerManager : MonoBehaviour {
 		if (newController != null) {
 			controller.Exit(ball.state, rb2d);
 			controller = newController;
+			ball.state.timeInState.Value = 0f;
 			controller.Enter(ball.state, rb2d);
 			return true;
 		} else {
