@@ -24,7 +24,7 @@ public class ReboundController : BallController {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
 		if (CheckLaunchTransition(state) || CheckTimeoutTransition(state)) {
-			LaunchBall(state, rb2d, state.compressionDirection.Value);
+			LaunchBall(state, rb2d, -state.compressionDirection.Value);
 			return new AirbornController();
 		}
 		return null;
@@ -47,6 +47,7 @@ public class ReboundController : BallController {
 	}
 
 	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
+		Debug.Log(launchDirection);
 		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
 		float launchForce = 6;
 		if (angle <= 30) {
