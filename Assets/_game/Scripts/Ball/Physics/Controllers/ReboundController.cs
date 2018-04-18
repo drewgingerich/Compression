@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ReboundController : BallController {
 
-	protected float maxTimeCompressed = 0.5f;
-	protected bool inAirLag;
-	protected float airLag = 0f;
-	protected float maxAirLag = 0.25f;
-	protected float maxLaunchAngle = 65f;
+	float maxTimeCompressed = 0.5f;
+	bool inAirLag;
+	float airLag = 0f;
+	float maxAirLag = 0.25f;
+	float maxLaunchAngle = 65f;
 	float maxAngularVelocity = 50f;
 	Vector2 lastDirection;
 
