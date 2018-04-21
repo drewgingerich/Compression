@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CompressedController : BallController {
 	
-	float maxTimeCompressed = 0.5f;
 	bool inAirLag;
 	float airLag = 0f;
 	float maxAirLag = 0.25f;
