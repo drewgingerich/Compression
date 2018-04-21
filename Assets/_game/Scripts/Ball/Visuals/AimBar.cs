@@ -12,12 +12,12 @@ public class AimBar : MonoBehaviour {
 	bool hidden;
 
 	void Start() {
-		ball.state.stateName.OnChange += CheckForLaunching;
+		ball.state.stateName.OnChange += CheckForCompression;
 		lineRenderer.enabled = false;
 		hidden = true;
 	}
 
-	void CheckForLaunching(StateName stateName) {
+	void CheckForCompression(StateName stateName) {
 		if (stateName == StateName.Compressed || stateName == StateName.Rebound) {
 			if (hidden)
 				Show();
