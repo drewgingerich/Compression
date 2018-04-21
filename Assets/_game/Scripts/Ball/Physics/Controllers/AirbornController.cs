@@ -13,6 +13,7 @@ public class AirbornController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
+		state.stateName.Value = StateName.Airborn;
 		state.gravityRatio.Value = 1f;
 	}
 

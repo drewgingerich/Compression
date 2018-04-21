@@ -12,6 +12,7 @@ public class ReboundController : BallController {
 	float maxAngularVelocity = 50f;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
+		state.stateName.Value = StateName.Rebound;
 		state.gravityRatio.Value = 0f;
 		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);		rb2d.velocity = rb2d.velocity * 0.5f;
 	}
@@ -47,7 +48,6 @@ public class ReboundController : BallController {
 	}
 
 	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
-		Debug.Log(launchDirection);
 		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
 		float launchForce = 6;
 		if (angle <= 30) {

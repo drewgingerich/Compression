@@ -13,6 +13,7 @@ public class GroundedController : BallController {
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
+		state.stateName.Value = StateName.Grounded;
 		state.gravityRatio.Value = 1f;
 	}
 

@@ -2,9 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StateName {
+	Airborn,
+	Grounded,
+	Compressed,
+	Impact,
+	Rebound
+}
+
 [System.Serializable]
 public class BallState {
 
+	public EventValue<StateName> stateName = new EventValue<StateName>();
 	public EventValue<float> timeInState = new EventValue<float>();
 	public EventValue<InputType> inputType = new EventValue<InputType>();
 	public EventValue<Vector2> inputDirection = new EventValue<Vector2>();
