@@ -9,21 +9,34 @@ public class AimBar : MonoBehaviour {
 	[SerializeField] LineRenderer lineRenderer;
 	float lineStartX = 0.15f;
 	float lineEndX = 0.6f;
-
-	void Awake() {
-		ball.state.compressionDirection.OnChange += UpdateAimBar;
-	}
+	bool hidden;
 
 	void Start() {
-		Hide();
+		ball.state.stateName.OnChange += CheckForLaunching;
+		lineRenderer.enabled = false;
+		hidden = true;
+	}
+
+	void CheckForLaunching(StateName stateName) {
+		if (stateName == StateName.Compressed || stateName == StateName.Rebound) {
+			if (hidden)
+				Show();
+		} else {
+			if (!hidden)
+				Hide();
+		}
 	}
 
 	public void Show() {
+		hidden = false;
 		lineRenderer.enabled = true;
+		ball.state.compressionDirection.OnChange += UpdateAimBar;
 	}
 
 	public void Hide() {
+		hidden = true;
 		lineRenderer.enabled = false;
+		ball.state.compressionDirection.OnChange -= UpdateAimBar;
 	}
 
 	public void UpdateAimBar(Vector2 compressionVector) {
