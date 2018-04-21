@@ -19,7 +19,7 @@ public class ImpactController : BallController {
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Impact;
 		state.gravityRatio.Value = 0f;
-		rb2d.velocity = rb2d.velocity * 0.5f;
+		// rb2d.velocity = rb2d.velocity * 0.5f;
 	}
 	
 	bool CheckAirbornTransition(BallState state) {
