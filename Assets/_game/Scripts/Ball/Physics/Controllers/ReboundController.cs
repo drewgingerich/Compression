@@ -15,7 +15,7 @@ public class ReboundController : BallController {
 		state.stateName.Value = StateName.Rebound;
 		state.gravityRatio.Value = 0f;
 		rb2d.velocity = rb2d.velocity * 0.25f;
-		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);		rb2d.velocity = rb2d.velocity * 0.5f;
+		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
