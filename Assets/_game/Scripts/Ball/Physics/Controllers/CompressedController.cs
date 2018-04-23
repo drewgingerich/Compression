@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CompressedController : BallController {
-	
-	bool inAirLag;
-	float airLag = 0f;
-	float maxAirLag = 0.25f;
-	float maxLaunchAngle = 65f;
-	float maxAngularVelocity = 50f;
+
+	protected bool inAirLag;
+	protected float airLag;
+	protected float maxAirLag;
+	protected float maxLaunchAngle;
+	protected float maxAngularVelocity;
+
+	public CompressedController() {
+		inAirLag = false;
+		airLag = 0f;
+		maxAirLag = 0.25f;
+		maxLaunchAngle = 65f;
+		maxAngularVelocity = 50f;
+	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Compressed;
@@ -43,13 +51,13 @@ public class CompressedController : BallController {
 		return rotation * referenceDirection;
 	}
 
-	void LaunchBall(Rigidbody2D rb2d, Vector2 launchDirection) {
+	protected void LaunchBall(Rigidbody2D rb2d, Vector2 launchDirection) {
 		float forceScaling = 6f;
 		Vector2 releaseForce = launchDirection * forceScaling;
 		rb2d.AddForce(releaseForce, ForceMode2D.Impulse);
 	}
 
-	bool CheckAirbornTransition(BallState state) {
+	protected bool CheckAirbornTransition(BallState state) {
 		if (state.grounded.Value && !inAirLag)
 			return false;
 		if (!inAirLag) {
@@ -60,7 +68,7 @@ public class CompressedController : BallController {
 		return airLag >= maxAirLag ? true : false;
 	}
 
-	bool CheckLaunchTransition(BallState state) {
+	protected bool CheckLaunchTransition(BallState state) {
 		return state.inputDirection.Value == Vector2.zero ? true : false;
 	}
 }
