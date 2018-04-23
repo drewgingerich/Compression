@@ -22,9 +22,7 @@ public class GroundedController : BallController {
 	}
 
 	bool CheckCompressedTransition(BallState state) {
-		if (state.inputDirection.Value == Vector2.zero)
-			return false;
-		return Vector2.Dot(state.inputDirection.Value, state.contactNormal.Value) <= 0 ? true : false;
+		return state.inputDirection.Value != Vector2.zero ? true : false;
 	}
 }
 
