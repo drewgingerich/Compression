@@ -45,7 +45,7 @@ public class CompressedController : BallController {
 	}
 
 	protected bool CheckAirbornTransition(BallState state) {
-		return state.timeAirborn.Value >= maxAirTime ? true : false;
+		return !state.grounded.Value && state.timeAirborn.Value >= maxAirTime ? true : false;
 	}
 
 	protected bool CheckLaunchTransition(BallState state) {
