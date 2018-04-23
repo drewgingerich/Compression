@@ -21,6 +21,10 @@ public class BallControllerManager : MonoBehaviour {
 			checkForTransition = CheckForNewState();
 		}
 		controller.Update(ball.state, rb2d);
+		if (ball.state.grounded.Value)
+			ball.state.timeGrounded.Value += Time.fixedDeltaTime;
+		else
+			ball.state.timeAirborn.Value += Time.fixedDeltaTime;
 		ball.state.timeInState.Value += Time.fixedDeltaTime;
 	}
 

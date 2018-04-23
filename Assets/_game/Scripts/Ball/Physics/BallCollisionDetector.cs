@@ -31,6 +31,7 @@ public class BallCollisionDetector : MonoBehaviour {
 		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[1]);
 		if (numberOfContacts == 1) {
 			ball.state.grounded.Value = true;
+			ball.state.timeGrounded.Value = 0f;
 			ball.state.impactMagnitude.Value = impactVector.magnitude;
 			ball.state.reboundDirection.Value = GetReboundDirection(impactVector, normal);
 		}
@@ -40,6 +41,7 @@ public class BallCollisionDetector : MonoBehaviour {
 		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[1]);
 		if (numberOfContacts == 0) {
 			ball.state.grounded.Value = false;
+			ball.state.timeAirborn.Value = 0f;
 			impactVector = Vector2.zero;
 		}
 	}
