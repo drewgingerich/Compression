@@ -20,7 +20,7 @@ public class CompressedController : BallController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Compressed;
-		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
+		state.compressionDirection.Value = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -38,17 +38,8 @@ public class CompressedController : BallController {
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		Vector2 clampedDirection = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
-		state.compressionDirection.Value = ClampDirection(clampedDirection, state.compressionDirection.Value, maxAngularVelocity * Time.deltaTime);
-	}
-
-	Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
-		float angle = Vector2.SignedAngle(referenceDirection, direction);
-		if (Mathf.Abs(angle) <= maxAngle)
-			return direction;
-		float clampedAngle = Mathf.Clamp(angle, -maxAngle, maxAngle);
-		Quaternion rotation = Quaternion.AngleAxis(clampedAngle, Vector3.forward);
-		return rotation * referenceDirection;
+		Vector2 clampedDirection = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
+		state.compressionDirection.Value = clampedDirection.Clamp(state.compressionDirection.Value, maxAngularVelocity * Time.deltaTime);
 	}
 
 	protected void LaunchBall(Rigidbody2D rb2d, Vector2 launchDirection) {

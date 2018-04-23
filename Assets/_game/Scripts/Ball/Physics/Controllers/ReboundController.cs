@@ -12,7 +12,7 @@ public class ReboundController : CompressedController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Rebound;
-		state.compressionDirection.Value = ClampDirection(state.inputDirection.Value, -state.contactNormal.Value, maxLaunchAngle);
+		state.compressionDirection.Value = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
 		state.gravityRatio.Value = 0f;
 		rb2d.velocity = rb2d.velocity * 0.25f;
 	}
@@ -25,15 +25,6 @@ public class ReboundController : CompressedController {
 			return new AirbornController();
 		}
 		return null;
-	}
-	
-	Vector2 ClampDirection(Vector2 direction, Vector2 referenceDirection, float maxAngle) {
-		float angle = Vector2.SignedAngle(referenceDirection, direction);
-		if (Mathf.Abs(angle) <= maxAngle)
-			return direction;
-		float clampedAngle = Mathf.Clamp(angle, -maxAngle, maxAngle);
-		Quaternion rotation = Quaternion.AngleAxis(clampedAngle, Vector3.forward);
-		return rotation * referenceDirection;
 	}
 
 	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
