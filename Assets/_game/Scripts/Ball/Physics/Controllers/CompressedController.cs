@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class CompressedController : BallController {
 
-	protected bool inAirLag;
-	protected float airLag;
-	protected float maxAirLag;
+	protected float maxAirTime;
 	protected float maxLaunchAngle;
 	protected float maxAngularVelocity;
 
 	public CompressedController() {
-		inAirLag = false;
-		airLag = 0f;
-		maxAirLag = 0.25f;
+		maxAirTime = 0.25f;
 		maxLaunchAngle = 65f;
 		maxAngularVelocity = 50f;
 	}
@@ -49,14 +45,7 @@ public class CompressedController : BallController {
 	}
 
 	protected bool CheckAirbornTransition(BallState state) {
-		if (state.grounded.Value && !inAirLag)
-			return false;
-		if (!inAirLag) {
-			inAirLag = true;
-			return false;
-		}
-		airLag += Time.deltaTime;
-		return airLag >= maxAirLag ? true : false;
+		return state.timeAirborn.Value >= maxAirTime ? true : false;
 	}
 
 	protected bool CheckLaunchTransition(BallState state) {
