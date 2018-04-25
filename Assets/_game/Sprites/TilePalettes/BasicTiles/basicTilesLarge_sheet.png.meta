@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: b31b6ad029a7c4e6bb6caab7767d1492
-timeCreated: 1523079059
+timeCreated: 1524537186
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -121,10 +121,20 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: 253, y: 256}
+        - {x: -256, y: -253}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
+      physicsShape:
+      - - {x: 255.7067, y: 256}
+        - {x: -256, y: -255.94424}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
       tessellationDetail: 0
     - serializedVersion: 2
       name: basicTilesLarge_sheet_1
@@ -135,10 +145,18 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: -256, y: 256}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
+      physicsShape:
+      - - {x: -256, y: 256}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
       tessellationDetail: 0
     - serializedVersion: 2
       name: basicTilesLarge_sheet_2
@@ -149,10 +167,18 @@ TextureImporter:
         width: 512
         height: 512
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
+      outline:
+      - - {x: -256, y: 256}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
+      physicsShape:
+      - - {x: -256, y: 256}
+        - {x: -256, y: -256}
+        - {x: 256, y: -256}
+        - {x: 256, y: 256}
       tessellationDetail: 0
     outline: []
     physicsShape: []
