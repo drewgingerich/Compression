@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: b31b6ad029a7c4e6bb6caab7767d1492
-timeCreated: 1524537186
+guid: 51efa8b06818946679115292ab5a9420
+timeCreated: 1524540967
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: basicTilesLarge_sheet_0
-    21300002: basicTilesLarge_sheet_1
-    21300004: basicTilesLarge_sheet_2
+    21300000: spikes_0
+    21300002: spikes_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -49,7 +48,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 512
+  spritePixelsToUnits: 64
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -63,7 +62,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -73,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -83,7 +82,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -93,7 +92,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -103,7 +102,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,72 +112,82 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: basicTilesLarge_sheet_0
+      name: spikes_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 512
-        height: 512
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 253, y: 256}
-        - {x: -256, y: -253}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
+      - - {x: -4, y: 24}
+        - {x: -4, y: 26}
+        - {x: -7, y: 32}
+        - {x: -13, y: 32}
+        - {x: -17, y: 26}
+        - {x: -24, y: 32}
+        - {x: -31, y: 32}
+        - {x: -32, y: 30}
+        - {x: -32, y: -32}
+        - {x: -6, y: -32}
+      - - {x: -4, y: 25}
+        - {x: -6, y: 17}
+        - {x: -6, y: 4}
+        - {x: -4, y: -32}
+        - {x: 4, y: -32}
+        - {x: 6, y: -1}
+        - {x: 6, y: 17}
+        - {x: 3, y: 25}
+      - - {x: 32, y: 30}
+        - {x: 31, y: 32}
+        - {x: 25, y: 32}
+        - {x: 21, y: 26}
+        - {x: 14, y: 32}
+        - {x: 6, y: 32}
+        - {x: 4, y: 26}
+        - {x: 4, y: 5}
+        - {x: 6, y: -32}
+        - {x: 32, y: -32}
       physicsShape:
-      - - {x: 255.7067, y: 256}
-        - {x: -256, y: -255.94424}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
+      - - {x: 32, y: -32}
+        - {x: 32, y: 32}
+        - {x: -32, y: 32}
+        - {x: -32, y: -32}
       tessellationDetail: 0
     - serializedVersion: 2
-      name: basicTilesLarge_sheet_1
+      name: spikes_1
       rect:
         serializedVersion: 2
-        x: 512
+        x: 64
         y: 0
-        width: 512
-        height: 512
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -256, y: 256}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
+      - - {x: 6, y: 2}
+        - {x: 1, y: -7}
+        - {x: -5, y: 2}
+        - {x: -10, y: 2}
+        - {x: -11, y: 1}
+        - {x: -13, y: -8}
+        - {x: -22, y: 2}
+        - {x: -26, y: 2}
+        - {x: -31, y: -2}
+        - {x: -32, y: -11}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: -7}
+        - {x: 28, y: 2}
       physicsShape:
-      - - {x: -256, y: 256}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: basicTilesLarge_sheet_2
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 0
-        width: 512
-        height: 512
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -256, y: 256}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
-      physicsShape:
-      - - {x: -256, y: 256}
-        - {x: -256, y: -256}
-        - {x: 256, y: -256}
-        - {x: 256, y: 256}
+      - - {x: -32, y: -0.14217377}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 0.03464508}
       tessellationDetail: 0
     outline: []
     physicsShape: []
