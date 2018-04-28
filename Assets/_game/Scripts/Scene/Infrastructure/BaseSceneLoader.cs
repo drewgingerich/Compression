@@ -5,19 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class BaseSceneLoader : MonoBehaviour {
 
-	public event System.Action OnBaseSceneLoaded = delegate { };
 	string baseSceneName = "Base";
 
 	void Awake() {
 		Scene baseScene = SceneManager.GetSceneByName(baseSceneName);
-		if (baseScene.IsValid())
-			StartCoroutine(LoadBaseScene());
-		else
-			OnBaseSceneLoaded();
-	}
-
-	IEnumerator LoadBaseScene() {
-		yield return SceneManager.LoadSceneAsync("Base", LoadSceneMode.Additive);
-		OnBaseSceneLoaded();
+		if (!baseScene.IsValid())
+			SceneManager.LoadScene("Base", LoadSceneMode.Additive);
 	}
 }
