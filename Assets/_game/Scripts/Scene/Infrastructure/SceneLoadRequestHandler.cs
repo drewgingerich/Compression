@@ -6,20 +6,11 @@ using UnityEngine.SceneManagement;
 public class SceneLoadRequestHandler : MonoBehaviour {
 
 	GameManager gameManager;
-
-	void Awake() {
-		gameManager = GameManager.instance;
-		if (gameManager == null)
-			StartCoroutine(LoadBaseScene());
-	}
-
-	IEnumerator LoadBaseScene () {
-		yield return SceneManager.LoadSceneAsync("Base", LoadSceneMode.Additive);
-		gameManager = GameManager.instance;
-	}
+	float timeout = 1f;
 
 	public void RequestSceneLoad(string sceneName) {
-		if (gameManager != null)
-			gameManager.LoadScene(sceneName);
+		if (gameManager == null)
+			gameManager = GameManager.instance;
+		gameManager.LoadScene(sceneName);
 	}
 }
