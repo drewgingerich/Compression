@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class SceneLoadRequestHandler : MonoBehaviour {
 
 	GameManager gameManager;
-	float timeout = 1f;
 
 	public void RequestSceneLoad(string sceneName) {
 		if (gameManager == null)
