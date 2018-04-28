@@ -21,7 +21,10 @@ public class ImpactInfoEvent : UnityEvent<ImpactInfo> {}
 public class PlayerColorEvent : UnityEvent<PlayerColorScheme> {};
 
 [Serializable]
-public class InputTypeEvent : UnityEvent<InputType> {};
+public class PlayerInfoEvent: UnityEvent<PlayerInfo> {}
 
 [Serializable]
-public class InputSchemeEvent : UnityEvent<InputScheme> {};
+public class InputTypeEvent : UnityEvent<InputType> {}
+
+[Serializable]
+public class InputSchemeEvent : UnityEvent<InputScheme> {}
