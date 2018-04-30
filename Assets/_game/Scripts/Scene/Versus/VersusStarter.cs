@@ -10,11 +10,12 @@ public class VersusStarter : MonoBehaviour {
 	[SerializeField] InputSchemeMonitor inputSchemeMonitor;
 
 	void Start() {
-		if (playerRoster.items.Count == 0)
-			return;
-		inputSchemeMonitor.enabled = false;
-		foreach (PlayerInfo playerInfo in playerRoster.items) {
-			OnAddPlayer.Invoke(playerInfo);
+		if (playerRoster.items.Count == 0) {
+			inputSchemeMonitor.StartMonitor();
+		} else {
+			foreach (PlayerInfo playerInfo in playerRoster.items) {
+				OnAddPlayer.Invoke(playerInfo);
+			}
 		}
 	}
 }

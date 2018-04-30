@@ -5,51 +5,51 @@ using UnityEngine.Events;
 
 public class InputSchemeMonitor : MonoBehaviour {
 
+	public PlayerInfoEvent OnDetectNewPlayer;
+
+	[SerializeField] bool startOnAwake;
+
 	[SerializeField] InputSchemeRuntimeSet availableInputSchemes;
+	[SerializeField] InputSchemeRuntimeSet takenInputSchemes;
+
 	[SerializeField] PlayerInfo defaultPlayerInfo;
 	[SerializeField] PlayerInfoLimitedRuntimeSet playerRoster;
-	
-	bool active = true;
+
+	void Awake() {
+		if (startOnAwake)
+			StartMonitor();
+	}
 
 	void Update () {
-		if (!active || playerRoster.FreeSlots() == 0)
-			return;
 		for (int i = availableInputSchemes.items.Count - 1; i >= 0; i--) {
+			if (playerRoster.FreeSlots() == 0) {
+				PauseMonitor();
+				break;
+			}
 			InputScheme inputScheme = availableInputSchemes.items[i];
-			if (inputScheme.GetInputDirection() == Vector2.zero)
-				continue;
-			PlayerInfo newPlayerInfo = Instantiate(defaultPlayerInfo);
-			newPlayerInfo.inputScheme.Value = inputScheme;
-			playerRoster.RegisterItem(newPlayerInfo);
-			availableInputSchemes.UnregisterItem(inputScheme);
-			if (!active)
-				return;
+			if (inputScheme.GetInputDirection() != Vector2.zero) {
+				availableInputSchemes.UnregisterItem(inputScheme);
+				takenInputSchemes.RegisterItem(inputScheme);
+				PlayerInfo playerInfo = Instantiate(defaultPlayerInfo);
+				playerInfo.inputScheme.Value = inputScheme;
+				playerRoster.RegisterItem(playerInfo);
+				OnDetectNewPlayer.Invoke(playerInfo);
+			}
 		}
 	}
 
-	void OnEnable() {
+	public void StartMonitor() {
+		playerRoster.OnNoVacancy += PauseMonitor;
+		enabled = true;
+	}
+
+	public void PauseMonitor() {
+		StopMonitor();
 		playerRoster.OnVacancy += StartMonitor;
-		playerRoster.OnNoVacancy += StopMonitor;
-		playerRoster.OnUnregisterItem += MonitorInputScheme;
 	}
 
-	void OnDisable() {
-		playerRoster.OnVacancy -= StartMonitor;
-		playerRoster.OnNoVacancy -= StopMonitor;
-	}
-	
-	void MonitorInputScheme(PlayerInfo playerInfo) {
-		if (!availableInputSchemes.items.Contains(playerInfo.inputScheme.Value))
-			availableInputSchemes.RegisterItem(playerInfo.inputScheme.Value);
-	}
-
-	void StopMonitor() {
-		gameObject.SetActive(false);
-		active = false;
-	}
-
-	void StartMonitor() {
-		gameObject.SetActive(true);
-		active = true;
+	public void StopMonitor() {
+		playerRoster.OnNoVacancy -= PauseMonitor;
+		enabled = false;
 	}
 }
