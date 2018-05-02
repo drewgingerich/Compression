@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 18bc37526909e4f2da5428254418ae72
-timeCreated: 1525148127
+timeCreated: 1525224315
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,10 @@ TextureImporter:
     21300014: MyTempleTiles_7
     21300016: MyTempleTiles_8
     21300018: MyTempleTiles_9
+    21300020: MyTempleTiles_10
+    21300022: MyTempleTiles_11
+    21300024: MyTempleTiles_12
+    21300026: MyTempleTiles_13
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -123,8 +127,8 @@ TextureImporter:
       name: MyTempleTiles_0
       rect:
         serializedVersion: 2
-        x: 64
-        y: 192
+        x: 0
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -141,8 +145,8 @@ TextureImporter:
       name: MyTempleTiles_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 192
+        y: 256
         width: 64
         height: 64
       alignment: 0
@@ -159,8 +163,8 @@ TextureImporter:
       name: MyTempleTiles_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
+        x: 0
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -178,7 +182,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -196,7 +200,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 64
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -207,13 +211,14 @@ TextureImporter:
       - - {x: -32, y: 32}
         - {x: -32, y: -32}
         - {x: 32, y: -32}
+        - {x: 32, y: 32}
       tessellationDetail: 0
     - serializedVersion: 2
       name: MyTempleTiles_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 192
+        y: 192
         width: 64
         height: 64
       alignment: 0
@@ -230,8 +235,8 @@ TextureImporter:
       name: MyTempleTiles_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 0
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -248,8 +253,8 @@ TextureImporter:
       name: MyTempleTiles_7
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
+        x: 64
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -267,7 +272,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 0
+        y: 128
         width: 64
         height: 64
       alignment: 0
@@ -284,7 +289,85 @@ TextureImporter:
       name: MyTempleTiles_9
       rect:
         serializedVersion: 2
-        x: 256
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MyTempleTiles_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -15.936508, y: 32}
+        - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: -16.011642}
+        - {x: 16.11715, y: -15.825958}
+        - {x: 16.086433, y: 0.12120056}
+        - {x: 0.14189148, y: 0.2384491}
+        - {x: 0.09122467, y: 16.090744}
+        - {x: -15.974937, y: 16.180939}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MyTempleTiles_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MyTempleTiles_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -32, y: 32}
+        - {x: -32, y: -32}
+        - {x: 32, y: -32}
+        - {x: 32, y: 32}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MyTempleTiles_13
+      rect:
+        serializedVersion: 2
+        x: 128
         y: 0
         width: 64
         height: 64
