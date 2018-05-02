@@ -8,10 +8,12 @@ public class BallAnimation : MonoBehaviour
 	[SerializeField] Animator anim;
 
 	int squishedHash;
+	int impactHash;
 
 	void Awake()
 	{
 		squishedHash = Animator.StringToHash("Squished");
+		impactHash = Animator.StringToHash("Impact");
 		ball.state.stateName.OnChange += AnimateBall;
 	}
 
@@ -21,9 +23,14 @@ public class BallAnimation : MonoBehaviour
 		{
 			anim.SetBool(squishedHash, true);
 		}
+		else if (stateName == StateName.Impact)
+		{
+			anim.SetBool(impactHash, true);
+		}
 		else
 		{
 			anim.SetBool(squishedHash, false);
+			anim.SetBool(impactHash, false);
 		}
 	}
 }
