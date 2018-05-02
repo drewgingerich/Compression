@@ -7,7 +7,8 @@ public class ResizeForObjects : MonoBehaviour {
 
 	[SerializeField] TransformRuntimeSet objectTransformSet;
 	[SerializeField] float convergenceTime = 0.5f;
-	[SerializeField] float baseOrthographicSize = 6;
+	[SerializeField] float baseOrthographicSize = 3;
+	[SerializeField] float fallbackSize = 6f;
 	[SerializeField] float buffer = 2.5f;
 
 	new Camera camera;
@@ -24,6 +25,8 @@ public class ResizeForObjects : MonoBehaviour {
 	}
 
 	float FindOrthographicSize(List<Transform> objectTransforms, float aspectRatio) {
+		if (objectTransforms.Count == 0)
+			return fallbackSize;
 		Vector2 cornerVector = FindCornerVector(transform.position, objectTransforms);
 		cornerVector.x = cornerVector.x / aspectRatio;
 		cornerVector += new Vector2(buffer, buffer);
