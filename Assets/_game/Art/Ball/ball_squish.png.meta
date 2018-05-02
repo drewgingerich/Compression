@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 1df2e87a4f535416f90f859c8fe9176b
-timeCreated: 1512269262
+timeCreated: 1525228034
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -50,7 +50,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 30
+  spritePixelsToUnits: 64
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -149,55 +149,85 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -4, y: 7}
+        - {x: -7, y: 6}
+        - {x: -7, y: -2}
+        - {x: -3, y: -6}
+        - {x: 5, y: -6}
+        - {x: 6, y: -2}
+        - {x: 6, y: 7}
       tessellationDetail: 0
     - serializedVersion: 2
       name: ball_squish_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -4, y: 5}
+        - {x: -7, y: 4}
+        - {x: -7, y: -3}
+        - {x: -4, y: -6}
+        - {x: 5, y: -6}
+        - {x: 6, y: -3}
+        - {x: 6, y: 5}
       tessellationDetail: 0
     - serializedVersion: 2
       name: ball_squish_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -3, y: 3}
+        - {x: -8, y: 1}
+        - {x: -8, y: -3}
+        - {x: -5, y: -6}
+        - {x: 6, y: -6}
+        - {x: 7, y: -3}
+        - {x: 7, y: 1}
+        - {x: 5, y: 3}
       tessellationDetail: 0
     - serializedVersion: 2
       name: ball_squish_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 0
-        width: 32
-        height: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 4, y: 1}
+        - {x: -7, y: 1}
+        - {x: -8, y: 0}
+        - {x: -8, y: -4}
+        - {x: -6, y: -6}
+        - {x: 5, y: -6}
+        - {x: 8, y: -3}
+        - {x: 8, y: 0}
       tessellationDetail: 0
     outline: []
     physicsShape: []
