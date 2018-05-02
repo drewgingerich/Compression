@@ -17,6 +17,10 @@ public class ReboundController : CompressedController {
 		rb2d.velocity = rb2d.velocity * 0.25f;
 	}
 
+	public override void Exit(BallState state, Rigidbody2D rb2d) {
+		state.previousState.Value = StateName.Rebound;
+	}
+
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();

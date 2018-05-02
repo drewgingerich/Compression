@@ -13,6 +13,7 @@ public enum StateName {
 [System.Serializable]
 public class BallState {
 
+	public EventValue<StateName> previousState = new EventValue<StateName>();
 	public EventValue<StateName> stateName = new EventValue<StateName>();
 	public EventValue<float> timeInState = new EventValue<float>();
 

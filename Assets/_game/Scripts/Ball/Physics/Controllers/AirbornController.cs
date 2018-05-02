@@ -17,6 +17,10 @@ public class AirbornController : BallController {
 		state.gravityRatio.Value = 1f;
 	}
 
+	public override void Exit(BallState state, Rigidbody2D rb2d) {
+		state.previousState.Value = StateName.Airborn;
+	}
+
 	bool CheckImpactTransition(BallState state) {
 		return state.grounded.Value && state.timeInState.Value >= lag;
 	}

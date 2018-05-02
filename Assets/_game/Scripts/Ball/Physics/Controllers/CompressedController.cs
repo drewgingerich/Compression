@@ -21,6 +21,7 @@ public class CompressedController : BallController {
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
 		state.impactMagnitude.Value = 0f;
+		state.previousState.Value = StateName.Compressed;
 	}
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {

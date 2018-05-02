@@ -17,6 +17,10 @@ public class GroundedController : BallController {
 		state.gravityRatio.Value = 1f;
 	}
 
+	public override void Exit(BallState state, Rigidbody2D rb2d) {
+		state.previousState.Value = StateName.Grounded;
+	}
+	
 	bool CheckAirbornTransition(BallState state) {
 		return !state.grounded.Value ? true : false;
 	}

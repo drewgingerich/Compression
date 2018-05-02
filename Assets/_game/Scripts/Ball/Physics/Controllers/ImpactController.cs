@@ -21,6 +21,10 @@ public class ImpactController : BallController {
 		state.gravityRatio.Value = 0f;
 	}
 
+	public override void Exit(BallState state, Rigidbody2D rb2d) {
+		state.previousState.Value = StateName.Impact;
+	}
+
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		rb2d.AddForce(rb2d.velocity * -1.5f);
 	}
