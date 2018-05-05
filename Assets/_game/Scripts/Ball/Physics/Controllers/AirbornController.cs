@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AirbornController : BallController {
 
-	float lag = 0.2f;
-
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckImpactTransition(state))
 			return new ImpactController();
@@ -22,6 +20,6 @@ public class AirbornController : BallController {
 	}
 
 	bool CheckImpactTransition(BallState state) {
-		return state.grounded.Value && state.timeInState.Value >= lag;
+		return state.grounded.Value;
 	}
 }
