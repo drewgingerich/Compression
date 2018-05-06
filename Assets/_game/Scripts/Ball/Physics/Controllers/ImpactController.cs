@@ -26,7 +26,7 @@ public class ImpactController : BallController {
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		rb2d.AddForce(rb2d.velocity * -1.5f);
+		rb2d.AddForce(rb2d.velocity * -2f);
 	}
 	
 	bool CheckAirbornTransition(BallState state) {
