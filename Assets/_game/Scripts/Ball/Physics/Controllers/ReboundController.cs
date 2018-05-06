@@ -31,20 +31,6 @@ public class ReboundController : CompressedController {
 		return null;
 	}
 
-	void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
-		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
-		float launchForce = 6;
-		if (angle <= 30) {
-			float reboundBoost = 5f * 0.1f * state.impactMagnitude.Value;
-			launchForce += reboundBoost;
-		} else {
-			float reboundBoost = 5f * 0.07f * state.impactMagnitude.Value;
-			launchForce += reboundBoost;
-		}
-		Vector2 launchVector = launchDirection * launchForce;
-		rb2d.AddForce(launchVector, ForceMode2D.Impulse);
-	}
-
 	bool CheckTimeoutTransition(BallState state) {
 		return state.timeInState.Value >= maxTimeCompressed ? true : false;
 	}

@@ -17,6 +17,7 @@ public class CompressedController : BallController {
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Compressed;
 		state.compressionDirection.Value = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
+		state.impactMagnitude.Value = 0f;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -28,7 +29,7 @@ public class CompressedController : BallController {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
 		if (CheckLaunchTransition(state)) {
-			LaunchBall(rb2d, -state.compressionDirection.Value);
+			LaunchBall(state, rb2d, -state.compressionDirection.Value);
 			return new AirbornController();
 		}
 		return null;
@@ -40,10 +41,18 @@ public class CompressedController : BallController {
 		state.compressionDirection.Value = clampedDirection.Clamp(state.compressionDirection.Value, maxAngleChange);
 	}
 
-	protected void LaunchBall(Rigidbody2D rb2d, Vector2 launchDirection) {
-		float forceScaling = 6f;
-		Vector2 releaseForce = launchDirection * forceScaling;
-		rb2d.AddForce(releaseForce, ForceMode2D.Impulse);
+	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
+		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
+		float launchForce = 6;
+		if (angle <= 30) {
+			float reboundBoost = 0.4f * state.impactMagnitude.Value;
+			launchForce += reboundBoost;
+		} else {
+			float reboundBoost = 0.3f * state.impactMagnitude.Value;
+			launchForce += reboundBoost;
+		}
+		Vector2 launchVector = launchDirection * launchForce;
+		rb2d.AddForce(launchVector, ForceMode2D.Impulse);
 	}
 
 	protected bool CheckAirbornTransition(BallState state) {
