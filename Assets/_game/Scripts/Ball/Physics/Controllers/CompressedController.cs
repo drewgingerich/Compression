@@ -9,7 +9,7 @@ public class CompressedController : BallController {
 	protected float maxAngularVelocity;
 
 	public CompressedController() {
-		maxAirTime = 0.25f;
+		maxAirTime = 0.1f;
 		maxLaunchAngle = 65f;
 		maxAngularVelocity = 50f;
 	}
