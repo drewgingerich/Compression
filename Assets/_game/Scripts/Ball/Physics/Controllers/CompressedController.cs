@@ -43,14 +43,13 @@ public class CompressedController : BallController {
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
 		float angle = Vector2.Angle(state.reboundDirection.Value, launchDirection);
-		float launchForce = 6;
+		float reboundBoost = 0;
 		if (angle <= 30) {
-			float reboundBoost = 0.4f * state.impactMagnitude.Value;
-			launchForce += reboundBoost;
+			reboundBoost = 0.4f * state.impactMagnitude.Value;
 		} else {
-			float reboundBoost = 0.3f * state.impactMagnitude.Value;
-			launchForce += reboundBoost;
+			reboundBoost = 0.4f * state.impactMagnitude.Value;
 		}
+		float launchForce = 6 + reboundBoost;
 		Vector2 launchVector = launchDirection * launchForce;
 		rb2d.AddForce(launchVector, ForceMode2D.Impulse);
 	}
