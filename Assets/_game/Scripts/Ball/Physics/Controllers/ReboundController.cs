@@ -14,7 +14,7 @@ public class ReboundController : CompressedController {
 		state.stateName.Value = StateName.Rebound;
 		state.compressionDirection.Value = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
 		state.gravityRatio.Value = 0f;
-		rb2d.velocity = rb2d.velocity * 0.25f;
+		rb2d.velocity = Vector2.zero;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {

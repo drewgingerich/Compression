@@ -33,6 +33,7 @@ public class BallCollisionDetector : MonoBehaviour {
 			ball.state.grounded.Value = true;
 			ball.state.timeGrounded.Value = 0f;
 			ball.state.impactMagnitude.Value = impactVector.magnitude;
+			ball.state.airjumpAvailable.Value = true;
 			ball.state.reboundDirection.Value = GetReboundDirection(impactVector, normal);
 		}
 	}

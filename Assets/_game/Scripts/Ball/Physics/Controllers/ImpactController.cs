@@ -5,6 +5,7 @@ using UnityEngine;
 public class ImpactController : BallController {
 
 	float maxStickyTime = 0.75f;
+	float friction = 2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckAirbornTransition(state))
@@ -19,6 +20,7 @@ public class ImpactController : BallController {
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Impact;
 		state.gravityRatio.Value = 0f;
+		state.impactChain.Value += 1;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -26,7 +28,7 @@ public class ImpactController : BallController {
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		rb2d.AddForce(rb2d.velocity * -2f);
+		rb2d.AddForce(rb2d.velocity * -friction);
 	}
 	
 	bool CheckAirbornTransition(BallState state) {
