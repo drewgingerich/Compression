@@ -26,6 +26,7 @@ public class ReboundController : CompressedController {
 			return new AirbornController();
 		if (CheckLaunchTransition(state) || CheckTimeoutTransition(state)) {
 			LaunchBall(state, rb2d, -state.compressionDirection.Value);
+			state.freshInput.Value = false;
 			return new AirbornController();
 		}
 		return null;

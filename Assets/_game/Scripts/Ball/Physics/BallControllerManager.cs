@@ -16,6 +16,9 @@ public class BallControllerManager : MonoBehaviour {
 
 	void FixedUpdate() {
 		ball.state.inputDirection.Value = ball.playerInfo.inputScheme.Value.GetInputDirection();
+		if (ball.state.inputDirection.Value == Vector2.zero) {
+			ball.state.freshInput.Value = true;
+		}
 		bool checkForTransition = true;
 		while (checkForTransition) {
 			checkForTransition = CheckForNewState();

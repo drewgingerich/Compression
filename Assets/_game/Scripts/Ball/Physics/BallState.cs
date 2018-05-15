@@ -20,6 +20,7 @@ public class BallState {
 
 	public EventValue<InputType> inputType = new EventValue<InputType>();
 	public EventValue<Vector2> inputDirection = new EventValue<Vector2>();
+	public EventValue<bool> freshInput = new EventValue<bool>();
 
 	public EventValue<bool> grounded = new EventValue<bool>();
 	public EventValue<float> timeGrounded = new EventValue<float>();

@@ -35,6 +35,6 @@ public class AirbornController : BallController {
 	}
 
 	bool CheckAirjumpTransition(BallState state) {
-		return state.inputDirection.Value != Vector2.zero && !delay && state.airjumpAvailable.Value;
+		return state.inputDirection.Value != Vector2.zero && !delay && state.airjumpAvailable.Value && state.freshInput.Value;
 	}
 }

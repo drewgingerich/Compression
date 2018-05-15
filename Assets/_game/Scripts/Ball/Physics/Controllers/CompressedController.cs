@@ -30,6 +30,7 @@ public class CompressedController : BallController {
 			return new AirbornController();
 		if (CheckLaunchTransition(state)) {
 			LaunchBall(state, rb2d, -state.compressionDirection.Value);
+			state.freshInput.Value = false;
 			return new AirbornController();
 		}
 		return null;

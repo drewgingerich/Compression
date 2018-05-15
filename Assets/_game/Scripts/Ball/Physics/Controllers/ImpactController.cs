@@ -35,7 +35,7 @@ public class ImpactController : BallController {
 	}
 
 	bool CheckReboundTransition(BallState state) {
-		return state.inputDirection.Value != Vector2.zero ? true : false;
+		return state.inputDirection.Value != Vector2.zero && state.freshInput.Value ? true : false;
 	}
 
 	bool CheckGroundedTransition(BallState state) {

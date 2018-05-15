@@ -29,6 +29,7 @@ public class AirjumpController : CompressedController {
 			return new ImpactController();
 		if (CheckLaunchTransition(state) || CheckTimeoutTransition(state)) {
 			LaunchBall(state, rb2d, -state.compressionDirection.Value);
+			state.freshInput.Value = false;
 			return new LaunchedController();
 		}
 		return null;
