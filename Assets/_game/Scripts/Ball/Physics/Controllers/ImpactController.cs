@@ -10,7 +10,7 @@ public class ImpactController : BallController {
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
-		if (CheckStickyCompressedTransition(state))
+		if (CheckReboundTransition(state))
 			return new ReboundController();
 		if (CheckGroundedTransition(state))
 			return new GroundedController();
@@ -34,7 +34,7 @@ public class ImpactController : BallController {
 		return !state.grounded.Value ? true : false;
 	}
 
-	bool CheckStickyCompressedTransition(BallState state) {
+	bool CheckReboundTransition(BallState state) {
 		return state.inputDirection.Value != Vector2.zero ? true : false;
 	}
 
