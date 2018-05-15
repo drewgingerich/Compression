@@ -20,7 +20,6 @@ public class ImpactController : BallController {
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Impact;
 		state.gravityRatio.Value = 0f;
-		state.impactChain.Value += 1;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
