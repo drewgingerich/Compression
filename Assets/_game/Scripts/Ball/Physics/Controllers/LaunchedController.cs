@@ -11,9 +11,15 @@ public class LaunchedController : BallController {
 	}
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
+		if (CheckImpactTransition(state))
+			return new ImpactController();
 		if (CheckTimeoutTransition(state))
 			return new AirbornController();
 		return null;
+	}
+
+	bool CheckImpactTransition(BallState state) {
+		return state.grounded.Value;
 	}
 
 	bool CheckTimeoutTransition(BallState state) {
