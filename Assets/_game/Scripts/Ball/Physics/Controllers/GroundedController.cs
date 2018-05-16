@@ -8,7 +8,7 @@ public class GroundedController : BallController {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
 		if (CheckCompressedTransition(state))
-			return CompressedControllerFactory.GetCompressedController(state.inputType.Value);
+			return new CompressedController();
 		return null;
 	}
 
