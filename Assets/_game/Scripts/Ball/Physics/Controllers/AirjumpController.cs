@@ -36,8 +36,7 @@ public class AirjumpController : CompressedController {
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		float maxAngleChange = maxAngularVelocity * Time.deltaTime / Mathf.Sqrt(state.timeInState.Value);
-		state.compressionDirection.Value = state.inputDirection.Value.Clamp(state.compressionDirection.Value, maxAngleChange);
+		state.compressionDirection.Value = state.inputDirection.Value;
 	}
 
 	bool CheckImpactTransition(BallState state) {
