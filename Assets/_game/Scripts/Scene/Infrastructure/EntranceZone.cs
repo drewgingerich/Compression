@@ -29,8 +29,6 @@ public class EntranceZone : MonoBehaviour {
 	}
 
 	void CheckIfAllPlayersAreReady() {
-		if (playerRoster.items.Count < 2)
-			return;
 		if (playersReady.Count != playerRoster.items.Count)
 			return;
 		OnAllPlayersReady.Invoke();
