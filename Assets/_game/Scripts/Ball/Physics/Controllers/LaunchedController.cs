@@ -7,7 +7,7 @@ public class LaunchedController : BallController {
 	float stateTime = 0.1f;
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
-		state.gravityRatio.Value = 0f;
+		// state.gravityRatio.Value = 0f;
 	}
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {

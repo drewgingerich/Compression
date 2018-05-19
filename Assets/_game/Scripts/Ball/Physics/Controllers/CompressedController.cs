@@ -44,9 +44,9 @@ public class CompressedController : BallController {
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
 		float maxDistance = 2f;
-		float minDistance = 0.75f;
-		float boostDistance = 0.5f;
-		float limitDistance = 3f;
+		float minDistance = 1.2f;
+		float boostDistance = 0.7f;
+		float limitDistance = 3.5f;
 		float distance = Mathf.Pow(state.impactMagnitude.Value, 2) / (Physics2D.gravity.magnitude * 2);
 		if (distance == 0)
 			distance = minDistance;

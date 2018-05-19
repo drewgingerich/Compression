@@ -9,8 +9,8 @@ public class AirbornController : BallController {
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckImpactTransition(state))
 			return new ImpactController();
-		if (CheckAirjumpTransition(state))
-			return new AirjumpController();
+		// if (CheckAirjumpTransition(state))
+			// return new AirjumpController();
 		return null;
 	}
 
