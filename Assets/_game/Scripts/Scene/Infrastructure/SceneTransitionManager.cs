@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class SceneTransitionManager : MonoBehaviour {
 
-	public static GameManager instance;
+	public static SceneTransitionManager instance;
 	[SerializeField] string startingSceneName;
 	string baseSceneName = "Base";
 
@@ -35,5 +35,10 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator LoadSceneRoutine(string sceneName) {
 		yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+		Scene loadedScene = SceneManager.GetSceneByName(sceneName);
+		if (loadedScene.IsValid())
+			SceneManager.SetActiveScene(loadedScene);
+		else
+			Debug.LogError(string.Format("Loaded scene {0} is not valid.", sceneName));
 	}
 }

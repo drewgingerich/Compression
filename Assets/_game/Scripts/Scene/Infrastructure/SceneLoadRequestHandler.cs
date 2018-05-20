@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadRequestHandler : MonoBehaviour {
 
-	GameManager gameManager;
+	SceneTransitionManager sceneTransitionManager;
 
 	public void RequestSceneLoad(string sceneName) {
-		if (gameManager == null)
-			gameManager = GameManager.instance;
-		gameManager.LoadScene(sceneName);
+		if (sceneTransitionManager == null)
+			sceneTransitionManager = SceneTransitionManager.instance;
+		sceneTransitionManager.LoadScene(sceneName);
 	}
 }
