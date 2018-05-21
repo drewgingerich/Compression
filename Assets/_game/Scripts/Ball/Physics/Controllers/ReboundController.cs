@@ -12,7 +12,7 @@ public class ReboundController : CompressedController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Rebound;
-		state.compressionDirection.Value = state.inputDirection.Value.Clamp(-state.contactNormal.Value, maxLaunchAngle);
+		state.compressionDirection.Value = state.inputDirection.Value.ClampRotation(-state.contactNormal.Value, maxLaunchAngle);
 		state.gravityRatio.Value = 0f;
 		rb2d.velocity = Vector2.zero;
 	}
