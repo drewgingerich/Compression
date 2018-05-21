@@ -5,7 +5,6 @@ using UnityEngine;
 public class ImpactController : BallController {
 
 	float maxStickyTime = 0.75f;
-	float friction = 2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckAirbornTransition(state))

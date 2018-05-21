@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class AirbornController : BallController {
 
-	bool delay;
+	int framesInState = 0;
+	int minimumFramesInState = 3;
 	float airMoveSpeed = 2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckImpactTransition(state))
 			return new ImpactController();
-		// if (CheckAirjumpTransition(state))
-			// return new AirjumpController();
 		return null;
 	}
 
@@ -19,7 +18,7 @@ public class AirbornController : BallController {
 		state.stateName.Value = StateName.Airborn;
 		state.gravityRatio.Value = 1f;
 		state.impactMagnitude.Value = 0f;
-		delay = true;
+		framesInState = 0;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -27,23 +26,14 @@ public class AirbornController : BallController {
 	}
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
-		if (delay)
-			delay = false;
-		// if (state.inputDirection.Value == Vector2.zero)
-		// 	return;
-		// int moveDirection;
-		// if (state.inputDirection.Value.x > 0)
-		// 	moveDirection = -1;
-		// else
-		// 	moveDirection = 1;
-		// rb2d.AddForce(Vector2.right * moveDirection * airMoveSpeed);
+		framesInState += 1;
 	}
 
 	bool CheckImpactTransition(BallState state) {
-		return state.grounded.Value && !delay;
+		return state.grounded.Value && framesInState > minimumFramesInState;
 	}
 
 	bool CheckAirjumpTransition(BallState state) {
-		return state.inputDirection.Value != Vector2.zero && !delay && state.airjumpAvailable.Value && state.freshInput.Value;
+		return state.inputDirection.Value != Vector2.zero && framesInState > minimumFramesInState && state.freshInput.Value;
 	}
 }
