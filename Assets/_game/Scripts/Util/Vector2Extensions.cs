@@ -20,6 +20,6 @@ public static class Vector2Extensions {
 		if (Mathf.Abs(angle) <= maxAngle)
 			return vector;
 		float clampedAngle = Mathf.Clamp(angle, -maxAngle, maxAngle);
-		return reference.Rotate(clampedAngle - angle);
+		return reference.Rotate(clampedAngle);
 	}
 }
