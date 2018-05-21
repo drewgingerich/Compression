@@ -43,7 +43,7 @@ public class CompressedController : BallController {
 	}
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
-		float maxDistance = 2f;
+		float maxDistance = 2.6f;
 		float minDistance = 1.2f;
 		float boostDistance = 0.7f;
 		float limitDistance = 3.5f;
@@ -55,17 +55,20 @@ public class CompressedController : BallController {
 		else if (distance < maxDistance)
 			distance = maxDistance;
 		else if (distance > limitDistance)
-			distance = limitDistance + Mathf.Pow(distance - limitDistance, 0.6f);
-		float launchForce = Mathf.Pow(2 * Physics2D.gravity.magnitude * distance, 0.5f);
+			distance = limitDistance + (distance - limitDistance) * 0.5f;
+		// distance += 1.25f;
+		float launchForce = Mathf.Sqrt(2 * Physics2D.gravity.magnitude * distance);
 		Vector2 launchVector = launchDirection * launchForce;
+		Debug.Log(state.impactMagnitude.Value.ToString() + " " + launchVector.magnitude.ToString());
 		rb2d.AddForce(launchVector, ForceMode2D.Impulse);
+		// rb2d.velocity = launchVector;
 	}
 
 	protected bool CheckAirbornTransition(BallState state) {
-		return !state.grounded.Value && state.timeAirborn.Value >= maxAirTime ? true : false;
+		return !state.grounded.Value && state.timeAirborn.Value >= maxAirTime;
 	}
 
 	protected bool CheckLaunchTransition(BallState state) {
-		return state.inputDirection.Value == Vector2.zero ? true : false;
+		return state.inputDirection.Value == Vector2.zero;
 	}
 }

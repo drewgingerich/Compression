@@ -13,8 +13,6 @@ public class BallCollisionDetector : MonoBehaviour {
 
 	void FixedUpdate () {
 		int numberOfContacts = rb2d.GetContacts(new ContactPoint2D[1]);
-		if (numberOfContacts == 0)
-			impactVector = rb2d.velocity;
 		if (numberOfContacts > 0) {
 			Vector2 normal = GetContactNormal();
 			if (normal == lastContactNormal)
@@ -25,6 +23,7 @@ public class BallCollisionDetector : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision2D) {
+		impactVector = -collision2D.relativeVelocity;
 		Vector2 normal = GetContactNormal();
 		lastContactNormal = normal;
 		ball.state.contactNormal.Value = normal;

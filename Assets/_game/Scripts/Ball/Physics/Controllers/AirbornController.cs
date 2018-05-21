@@ -5,6 +5,7 @@ using UnityEngine;
 public class AirbornController : BallController {
 
 	bool delay;
+	float airMoveSpeed = 2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckImpactTransition(state))
@@ -28,6 +29,14 @@ public class AirbornController : BallController {
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		if (delay)
 			delay = false;
+		// if (state.inputDirection.Value == Vector2.zero)
+		// 	return;
+		// int moveDirection;
+		// if (state.inputDirection.Value.x > 0)
+		// 	moveDirection = -1;
+		// else
+		// 	moveDirection = 1;
+		// rb2d.AddForce(Vector2.right * moveDirection * airMoveSpeed);
 	}
 
 	bool CheckImpactTransition(BallState state) {
