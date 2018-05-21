@@ -22,4 +22,16 @@ public static class Vector2Extensions {
 		float clampedAngle = Mathf.Clamp(angle, -maxAngle, maxAngle);
 		return reference.Rotate(clampedAngle);
 	}
+
+	public static Vector2 SnapRotation(this Vector2 v, float numPoints) {
+		float spacing = 360 / numPoints;
+		float angle = Vector2.SignedAngle(Vector2.right, v);
+		angle += 180;
+		float shift = angle % spacing;
+		if (shift <= spacing * 0.5f)
+			shift = -shift;
+		else
+			shift = spacing - shift;
+		return v.Rotate(shift);
+	}
 }
