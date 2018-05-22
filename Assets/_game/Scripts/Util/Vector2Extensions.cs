@@ -23,9 +23,9 @@ public static class Vector2Extensions {
 		return reference.Rotate(clampedAngle);
 	}
 
-	public static Vector2 SnapRotation(this Vector2 v, float numPoints) {
+	public static Vector2 SnapRotation(this Vector2 v, float numPoints, Vector2 referenceDirection) {
 		float spacing = 360 / numPoints;
-		float angle = Vector2.SignedAngle(Vector2.right, v);
+		float angle = Vector2.SignedAngle(referenceDirection, v);
 		angle += 180;
 		float shift = angle % spacing;
 		if (shift <= spacing * 0.5f)
@@ -33,5 +33,27 @@ public static class Vector2Extensions {
 		else
 			shift = spacing - shift;
 		return v.Rotate(shift);
+	}
+
+	public static Vector2 SnapRotation(this Vector2 v, float numPoints) {
+		return v.SnapRotation(numPoints, Vector2.right);
+	}
+
+	public static Vector2 SnapRotationToAngles(this Vector2 v, List<float> angles, Vector2 referenceDirection) {
+		float angleFromReference = Vector2.SignedAngle(referenceDirection, v);
+		float selectedAngle = angles[0];
+		float lowestDistance = 180;
+		foreach (float angle in angles) {
+			float difference = Mathf.Abs(angle - angleFromReference);
+			if (difference < lowestDistance) {
+				selectedAngle = angle;
+				lowestDistance = difference;
+			}
+		}
+		return referenceDirection.Rotate(selectedAngle) * v.magnitude;
+	}
+
+	public static Vector2 SnapRotationToAngles(this Vector2 v, List<float> angles) {
+		return v.SnapRotationToAngles(angles, Vector2.up);
 	}
 }

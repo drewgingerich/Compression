@@ -43,7 +43,7 @@ public class CompressedController : BallController {
 	}
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
-		launchDirection = launchDirection.SnapRotation(16);
+		launchDirection = launchDirection.SnapRotation(32, Vector2.right);
 		Debug.Log(launchDirection);
 		float launchDistance = 2f;
 		float launchForce = Mathf.Sqrt(2 * Physics2D.gravity.magnitude * launchDistance);
