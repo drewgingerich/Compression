@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 07e3cf753cee24580973647de0da92dd
-timeCreated: 1525663630
+timeCreated: 1527026418
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,9 @@ TextureImporter:
     21300002: prototype_1
     21300004: prototype_2
     21300006: prototype_3
+    21300008: prototype_4
+    21300010: prototype_5
+    21300012: prototype_6
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -118,7 +121,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -136,7 +139,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 16
-        y: 16
+        y: 32
         width: 16
         height: 16
       alignment: 0
@@ -152,8 +155,26 @@ TextureImporter:
       name: prototype_2
       rect:
         serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 0.03742981}
+        - {x: -8, y: 0.0015907288}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_3
+      rect:
+        serializedVersion: 2
         x: 0
-        y: 0
+        y: 16
         width: 16
         height: 16
       alignment: 0
@@ -164,13 +185,48 @@ TextureImporter:
       - - {x: -8, y: 8}
         - {x: -8, y: -8}
         - {x: 8, y: -8}
-        - {x: 8, y: -0.004541397}
+        - {x: 8, y: -0.039281845}
       tessellationDetail: 0
     - serializedVersion: 2
-      name: prototype_3
+      name: prototype_4
       rect:
         serializedVersion: 2
         x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8, y: 0.0127773285}
+        - {x: -8, y: -8}
+        - {x: 8, y: -8}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 3.9806423}
+        - {x: -8, y: 3.9806442}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: prototype_6
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 0
         width: 16
         height: 16
@@ -179,9 +235,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -8, y: -0.015595436}
-        - {x: -8, y: -8}
+      - - {x: -8, y: -8}
         - {x: 8, y: -8}
+        - {x: 8, y: -4.0357385}
+        - {x: -8, y: -4.035739}
       tessellationDetail: 0
     outline: []
     physicsShape: []
