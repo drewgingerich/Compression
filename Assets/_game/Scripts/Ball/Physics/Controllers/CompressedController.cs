@@ -11,7 +11,7 @@ public class CompressedController : BallController {
 	public CompressedController() {
 		maxAirTime = 0.1f;
 		maxLaunchAngle = 65f;
-		maxAngularVelocity = 50f;
+		maxAngularVelocity = 75f;
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {

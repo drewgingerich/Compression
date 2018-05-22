@@ -7,7 +7,7 @@ public class ReboundController : CompressedController {
 	float maxTimeCompressed;
 
 	public ReboundController() : base() {
-		maxTimeCompressed = 0.5f;
+		maxTimeCompressed = 1f;
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
