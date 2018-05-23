@@ -11,7 +11,7 @@ public class CompressedController : BallController {
 	public CompressedController() {
 		maxAirTime = 0.1f;
 		maxLaunchAngle = 65f;
-		maxAngularVelocity = 75f;
+		maxAngularVelocity = 100f;
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
@@ -38,13 +38,15 @@ public class CompressedController : BallController {
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		Vector2 clampedDirection = state.inputDirection.Value.ClampRotation(-state.contactNormal.Value, maxLaunchAngle);
-		float maxAngleChange = maxAngularVelocity * Time.deltaTime / Mathf.Sqrt(state.timeInState.Value);
+		float maxAngleChange = maxAngularVelocity * Time.deltaTime / Mathf.Pow(state.timeInState.Value + 1, 0.3f);
 		state.compressionDirection.Value = clampedDirection.ClampRotation(state.compressionDirection.Value, maxAngleChange);
+		float alignmentWithGravity = Vector2.Dot(rb2d.velocity.normalized, Physics2D.gravity.normalized);
+		Debug.Log(alignmentWithGravity);
+		rb2d.AddForce(rb2d.velocity * -state.friction.Value * 4 * (alignmentWithGravity * -0.5f + 1));
 	}
 
 	protected void LaunchBall(BallState state, Rigidbody2D rb2d, Vector2 launchDirection) {
 		launchDirection = launchDirection.SnapRotation(32, Vector2.right);
-		Debug.Log(launchDirection);
 		float launchDistance = 2f;
 		float launchForce = Mathf.Sqrt(2 * Physics2D.gravity.magnitude * launchDistance);
 		Vector2 launchVector = launchDirection * launchForce;
