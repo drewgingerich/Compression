@@ -27,20 +27,20 @@ public class ImpactController : BallController {
 
 	public override void Update(BallState state, Rigidbody2D rb2d) {
 		float alignmentWithGravity = Vector2.Dot(rb2d.velocity.normalized, Physics2D.gravity.normalized);
-		Debug.Log(alignmentWithGravity);
 		rb2d.AddForce(rb2d.velocity * -state.friction.Value * (alignmentWithGravity * -0.5f + 1));
+		rb2d.AddForce(state.contactNormal.Value * -10);
 	}
 	
 	bool CheckAirbornTransition(BallState state) {
-		return !state.grounded.Value ? true : false;
+		return !state.grounded.Value;
 	}
 
 	bool CheckReboundTransition(BallState state) {
-		return state.inputDirection.Value != Vector2.zero && state.freshInput.Value ? true : false;
+		return state.inputDirection.Value != Vector2.zero && Vector2.Angle(state.inputDirection.Value, state.contactNormal.Value) > 50 && state.freshInput.Value;
 	}
 
 	bool CheckGroundedTransition(BallState state) {
-		return state.timeInState.Value >= maxStickyTime ? true : false;
+		return state.timeInState.Value >= maxStickyTime;
 	}
 }
 

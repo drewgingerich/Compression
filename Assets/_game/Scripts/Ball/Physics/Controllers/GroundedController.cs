@@ -22,11 +22,11 @@ public class GroundedController : BallController {
 	}
 	
 	bool CheckAirbornTransition(BallState state) {
-		return !state.grounded.Value ? true : false;
+		return !state.grounded.Value;
 	}
 
 	bool CheckCompressedTransition(BallState state) {
-		return state.inputDirection.Value != Vector2.zero ? true : false;
+		return state.inputDirection.Value != Vector2.zero && Vector2.Angle(state.inputDirection.Value, state.contactNormal.Value) > 50 && state.freshInput.Value;
 	}
 }
 
