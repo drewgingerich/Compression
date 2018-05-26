@@ -1,0 +1,9 @@
+* Make ball come over edge when sliding up wall
+  Falling straight back down is very unsatisfying
+* Make rebound strength charge for the first ~0.25 seconds
+  Add a bit of timing, which can help make the rebound feel powerful
+  Aka make what the compression animation implies into a mechanic
+* After a timeout in the rebound state, transition to the compressed state
+  No one wants the ball to be launched for them, yo.
+* Think about a way to cancel the launch
+  Aim away from wall to cancel?

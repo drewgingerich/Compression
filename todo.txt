@@ -1,8 +1,0 @@
-Maybe have "stages" of launch intensity instead of the smooth scaling I have now?
-Detect impact direction
-	Change launch angle range to center on a reflection of the impact vector
-Detect impact magnitude
-	Scale launch magnitude directly with impact magnitude
-	At high impact magnitude, leave crack decal & make ball smoke/on fire
-Re-introduce sticky mechanic
-Re-introduce launches shortly after impact having a greater magnitude.
