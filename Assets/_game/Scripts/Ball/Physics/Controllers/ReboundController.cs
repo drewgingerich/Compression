@@ -31,10 +31,13 @@ public class ReboundController : CompressedController {
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
-		if (CheckLaunchTransition(state) || CheckTimeoutTransition(state)) {
-			LaunchBall(state, rb2d, -state.compressionDirection.Value);
+		if (CheckLaunchTransition(state)) {
+			BallActions.LaunchBall(state, rb2d, -state.compressionDirection.Value);
 			state.freshInput.Value = false;
 			return new AirbornController();
+		}
+		if (CheckTimeoutTransition(state)) {
+			return new CompressedController();
 		}
 		return null;
 	}
