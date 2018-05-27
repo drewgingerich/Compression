@@ -26,6 +26,24 @@ public class EventValue<T> {
 	}
 }
 
+#region custom types
+
+[Serializable]
+public class PlayerColorSchemeEventValue : EventValue<PlayerColorScheme> { }
+
+[Serializable]
+public class InputSchemeEventValue : EventValue<InputScheme> { }
+
+[Serializable]
+public class InputTypeEventValue : EventValue<InputType> { }
+
+[Serializable]
+public class StateNameEventValue : EventValue<StateName> { }
+
+#endregion
+
+#region builtin types
+
 [Serializable]
 public class BoolEventValue : EventValue<bool> { }
 
@@ -36,10 +54,6 @@ public class IntEventValue : EventValue<int> { }
 public class FloatEventValue : EventValue<float> { }
 
 [Serializable]
-public class PlayerColorSchemeEventValue : EventValue<PlayerColorScheme> { }
+public class Vector2EventValue : EventValue<Vector2> { }
 
-[Serializable]
-public class InputSchemeEventValue : EventValue<InputScheme> { }
-
-[Serializable]
-public class ImpactInfoEventValue : EventValue<ImpactInfo> { }
+#endregion

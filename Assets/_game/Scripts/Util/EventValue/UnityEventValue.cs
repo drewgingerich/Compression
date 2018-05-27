@@ -67,9 +67,3 @@ public class EventablePlayerColor: UnityEventValue<PlayerColorScheme> {
 	public PlayerColorEvent OnChanged;
 	protected override void CallEvent(PlayerColorScheme value) { OnChanged.Invoke(value); }
 }
-
-[Serializable]
-public class EventableImpactInfo : UnityEventValue<ImpactInfo> {
-	public ImpactInfoEvent OnChanged;
-	protected override void CallEvent(ImpactInfo value) { OnChanged.Invoke(value); }
-}
