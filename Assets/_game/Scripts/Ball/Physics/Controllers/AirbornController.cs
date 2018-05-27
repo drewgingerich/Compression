@@ -6,7 +6,6 @@ public class AirbornController : BallController {
 
 	int framesInState = 0;
 	int minimumFramesInState = 3;
-	float airMoveSpeed = 2f;
 
 	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
 		if (CheckImpactTransition(state))
