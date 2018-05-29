@@ -30,13 +30,13 @@ public class AimBar : MonoBehaviour {
 	public void Show() {
 		hidden = false;
 		lineRenderer.enabled = true;
-		ball.state.compressionDirection.OnChange += UpdateAimBar;
+		ball.state.aimDirection.OnChange += UpdateAimBar;
 	}
 
 	public void Hide() {
 		hidden = true;
 		lineRenderer.enabled = false;
-		ball.state.compressionDirection.OnChange -= UpdateAimBar;
+		ball.state.aimDirection.OnChange -= UpdateAimBar;
 	}
 
 	public void UpdateAimBar(Vector2 compressionVector) {

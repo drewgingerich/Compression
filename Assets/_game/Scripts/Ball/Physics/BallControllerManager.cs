@@ -29,6 +29,7 @@ public class BallControllerManager : MonoBehaviour {
 		else
 			ball.state.timeAirborn.Value += Time.fixedDeltaTime;
 		ball.state.timeInState.Value += Time.fixedDeltaTime;
+		ball.state.framesInState.Value += 1;
 	}
 
 	bool CheckForNewState() {
@@ -37,6 +38,7 @@ public class BallControllerManager : MonoBehaviour {
 			controller.Exit(ball.state, rb2d);
 			controller = newController;
 			ball.state.timeInState.Value = 0f;
+			ball.state.framesInState.Value = 0;
 			controller.Enter(ball.state, rb2d);
 			return true;
 		} else {

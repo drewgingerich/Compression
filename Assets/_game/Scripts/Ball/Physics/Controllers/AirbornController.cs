@@ -6,16 +6,14 @@ public class AirbornController : BallController {
 
 	int framesInState = 0;
 	int minimumFramesInState = 3;
-
-	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
-		if (CheckImpactTransition(state))
-			return new ImpactController();
-		return null;
+	
+	public override void Update(BallState state, Rigidbody2D rb2d) {
+		framesInState += 1;
+		BallActions.ApplyGravity(state, rb2d);
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Airborn;
-		state.gravityRatio.Value = 1f;
 		state.impactMagnitude.Value = 0f;
 		framesInState = 0;
 	}
@@ -24,8 +22,10 @@ public class AirbornController : BallController {
 		state.previousState.Value = StateName.Airborn;
 	}
 
-	public override void Update(BallState state, Rigidbody2D rb2d) {
-		framesInState += 1;
+	public override BallController CheckTransitions(BallState state, Rigidbody2D rb2d) {
+		if (CheckImpactTransition(state))
+			return new ImpactController();
+		return null;
 	}
 
 	bool CheckImpactTransition(BallState state) {

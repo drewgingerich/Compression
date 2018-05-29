@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class CompressedController : BallController {
 
-	protected float maxAirTime;
+	protected float maxAirTime = 0.1f;
 	protected float maxLaunchAngle;
 	protected float maxAngularVelocity;
 
-	public CompressedController() {
-		maxAirTime = 0.1f;
-		maxLaunchAngle = 65f;
-		maxAngularVelocity = 100f;
+	public override void Update(BallState state, Rigidbody2D rb2d) {
+		BallActions.ApplyGravity(state, rb2d);
+		BallActions.ApplyFriction(state, rb2d);
+		BallActions.Aim(state, rb2d);
 	}
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Compressed;
-		state.compressionDirection.Value = state.inputDirection.Value.ClampRotation(-state.contactNormal.Value, maxLaunchAngle);
 		state.impactMagnitude.Value = 0f;
+		state.frictionMagnitude.Value = 10f;
+		BallActions.SetAim(state, rb2d);
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
@@ -29,19 +30,11 @@ public class CompressedController : BallController {
 		if (CheckAirbornTransition(state))
 			return new AirbornController();
 		if (CheckLaunchTransition(state)) {
-			BallActions.LaunchBall(state, rb2d, -state.compressionDirection.Value);
 			state.freshInput.Value = false;
+			BallActions.LaunchBall(state, rb2d);
 			return new AirbornController();
 		}
 		return null;
-	}
-
-	public override void Update(BallState state, Rigidbody2D rb2d) {
-		Vector2 clampedDirection = state.inputDirection.Value.ClampRotation(-state.contactNormal.Value, maxLaunchAngle);
-		float maxAngleChange = maxAngularVelocity * Time.deltaTime / Mathf.Pow(state.timeInState.Value + 1, 0.3f);
-		state.compressionDirection.Value = clampedDirection.ClampRotation(state.compressionDirection.Value, maxAngleChange);
-		float alignmentWithGravity = Vector2.Dot(rb2d.velocity.normalized, Physics2D.gravity.normalized);
-		rb2d.AddForce(rb2d.velocity * -state.friction.Value * 4 * (alignmentWithGravity * -0.5f + 1));
 	}
 
 	protected bool CheckAirbornTransition(BallState state) {

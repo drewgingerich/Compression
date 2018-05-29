@@ -6,7 +6,7 @@ public class Ball : MonoBehaviour {
 
 	public event System.Action<GameObject> OnDie = delegate { };
 
-	public BallState state;
+	public BallState state = new BallState();
 	public PlayerInfo playerInfo;
 
 	public void Die() {
