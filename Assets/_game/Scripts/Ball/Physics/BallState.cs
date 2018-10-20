@@ -39,6 +39,7 @@ public class BallState {
 	public EventValue<float> frictionMagnitude = new EventValue<float>(5f);
 
 	public EventValue<float> impactMagnitude = new EventValue<float>();
+	public EventValue<Vector2> impactDirection = new EventValue<Vector2>();
 	public EventValue<Vector2> reboundDirection = new EventValue<Vector2>();
 	public EventValue<Vector2> contactNormal = new EventValue<Vector2>();
 

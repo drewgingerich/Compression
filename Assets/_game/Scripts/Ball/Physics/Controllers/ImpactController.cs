@@ -13,7 +13,7 @@ public class ImpactController : BallController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Impact;
-		state.frictionMagnitude.Value = 1f;
+		state.frictionMagnitude.Value = 2f;
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {

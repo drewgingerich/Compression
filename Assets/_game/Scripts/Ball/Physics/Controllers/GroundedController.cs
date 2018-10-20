@@ -11,7 +11,12 @@ public class GroundedController : BallController {
 
 	public override void Enter(BallState state, Rigidbody2D rb2d) {
 		state.stateName.Value = StateName.Grounded;
-		state.frictionMagnitude.Value = 2f;
+		state.frictionMagnitude.Value = 1f;
+		// Vector2 perp = state.contactNormal.Value.Rotate(90f);
+		// float projection = Vector2.Dot(perp, state.impactDirection.Value);
+		// float force = projection * state.impactMagnitude.Value;
+		// Debug.Log(state.impactDirection.Value);
+		// rb2d.AddForce(perp * force, ForceMode2D.Impulse);
 	}
 
 	public override void Exit(BallState state, Rigidbody2D rb2d) {
