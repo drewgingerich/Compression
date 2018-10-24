@@ -15,6 +15,10 @@ public static class Vector2Extensions {
 		return new Vector2(cos * tx - sin * ty, sin * tx + cos * ty);
 	}
 
+	public static Vector2 Perpendicular(this Vector2 v) {
+		return Rotate(v, 90);
+	}
+
 	public static Vector2 ClampRotation(this Vector2 vector, Vector2 reference, float maxAngle) {
 		float angle = Vector2.SignedAngle(reference, vector);
 		if (Mathf.Abs(angle) <= maxAngle)
